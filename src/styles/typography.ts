@@ -3,30 +3,46 @@ import {Colors} from 'app/styles/colors';
 
 interface TypographyTypes {
   defaultFont: TextStyle;
+  primary: TextStyle;
   bold: TextStyle;
   white: TextStyle;
   black: TextStyle;
+  secondary: TextStyle;
+  underline: TextStyle;
   h1: TextStyle;
   h2: TextStyle;
+  baseSize: TextStyle;
 }
 
 export const Typography: TypographyTypes = {
+  defaultFont: {
+    fontFamily: 'ProximaNova-Regular',
+  },
+  primary: {
+    color: Colors.primary,
+  },
+  secondary: {
+    color: Colors.secondary,
+  },
   white: {
     color: Colors.white,
   },
   black: {
     color: Colors.black,
   },
-  defaultFont: {
-    fontFamily: 'ProximaNova-Regular',
-  },
   bold: {
     fontFamily: 'Proxima Nova Bold',
+  },
+  underline: {
+    textDecorationLine: 'underline',
   },
   h1: {
     fontSize: 36,
   },
   h2: {
     fontSize: 24,
+  },
+  baseSize: {
+    fontSize: 14,
   },
 };

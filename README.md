@@ -4,9 +4,9 @@ CAN BE PUBLISHED
 
 Features left to add:
 
-[] word lookup opening browser
+[x] word lookup opening browser
+[] main menu to chose game mode, go to settings, choose "help - onboarding"
+[] help button on the main screen that leads to onboarding screens
 [] "onboarding" screens explaining the game
-[] help button during the game that leads to onboarding screens
-[] team mode (2 teams, timer countdown per word, words amount per game)
-[] main menu to chose game mode
 [] settings (dark mode, team settings (countdown time, word amount))
+[] team mode (2 teams, timer countdown per word, words amount per game)

@@ -28,3 +28,5 @@ const styles = StyleSheet.create({
     ...Typography.bold,
   },
 });
+
+export default Button;

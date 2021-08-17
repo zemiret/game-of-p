@@ -18,6 +18,7 @@ const Text: React.FC<TextProps> = props => (
 const styles = StyleSheet.create({
   text: {
     ...Typography.defaultFont,
+    ...Typography.primary,
   },
 });
 
