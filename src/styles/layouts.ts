@@ -4,6 +4,7 @@ import {Colors} from 'app/styles/colors';
 interface LayoutTypes {
   container: ViewStyle;
   centered: ViewStyle;
+  pullDown: ViewStyle;
   padded: ViewStyle;
 }
 
@@ -14,6 +15,10 @@ export const Layouts: LayoutTypes = {
   },
   centered: {
     justifyContent: 'center',
+    alignItems: 'center',
+  },
+  pullDown: {
+    justifyContent: 'flex-end',
     alignItems: 'center',
   },
   padded: {

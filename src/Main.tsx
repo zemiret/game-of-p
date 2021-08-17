@@ -1,45 +1,42 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import dictionary from 'app/assets/dictionary.json';
-import {Buttons, Layouts} from 'app/styles';
+import {Layouts, Typography} from 'app/styles';
+import Text from 'app/components/text';
+import {Button} from 'app/components/button';
 
 const selectRandom = () => {
   return dictionary[Math.floor(Math.random() * dictionary.length)];
 };
 
-const Main = () => {
+const Main: React.FC = () => {
   let [word, setWord] = useState<string>(selectRandom);
 
   return (
-    <View style={styles.container}>
-      <Text>{word}</Text>
-      <TouchableOpacity
-        activeOpacity={0.8}
-        style={styles.button}
-        onPress={() => setWord(selectRandom())}>
-        <Text style={styles.buttonText}>Następne</Text>
-      </TouchableOpacity>
+    <View style={styles.outerContainer}>
+      <View style={styles.sectionContainer}>
+        <Text style={styles.mainText}>{word}</Text>
+      </View>
+
+      <View style={styles.sectionContainer}>
+        <Button title={'Następne'} onPress={() => setWord(selectRandom())} />
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  outerContainer: {
     ...Layouts.container,
-    ...Layouts.centered,
     ...Layouts.padded,
   },
-  button: {
-    ...Buttons.btn,
-    ...Buttons.primary,
-    ...Buttons.big,
-    ...Buttons.rounded,
-
-    // backgroundColor: '#3a405a',
-    // padding: 20,
+  sectionContainer: {
+    ...Layouts.container,
+    ...Layouts.pullDown,
   },
-  buttonText: {
-    color: '#ffffff',
+  mainText: {
+    ...Typography.h1,
+    ...Typography.bold,
   },
 });
 
