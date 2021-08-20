@@ -5,18 +5,23 @@ import {Layouts, Typography} from 'app/styles';
 import Text from 'app/components/text';
 import Button from 'app/components/button';
 import Link from 'app/components/link';
+import {WithNavigationProp} from 'app/navigation';
+
+const sjpBaseHref = 'https://sjp.pwn.pl/szukaj/';
 
 const selectRandom = () => {
   return dictionary[Math.floor(Math.random() * dictionary.length)];
 };
 
-const sjpBaseHref = 'https://sjp.pwn.pl/szukaj/';
+interface FreeplayProps extends WithNavigationProp {}
 
-const Main: React.FC = () => {
+const Freeplay: React.FC<FreeplayProps> = ({navigation}) => {
   let [word, setWord] = useState<string>(selectRandom);
 
   return (
     <View style={styles.outerContainer}>
+      <Button title={'Back'} onPress={navigation.goBack} />
+
       <View style={styles.sectionContainer}>
         <Text style={styles.mainText}>{word}</Text>
         <Link text={'Że co?'} href={sjpBaseHref + word + '.html'} />
@@ -44,4 +49,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Main;
+export default Freeplay;
