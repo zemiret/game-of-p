@@ -6,7 +6,7 @@ import {
   TextStyle,
   TouchableOpacity,
 } from 'react-native';
-import Text from 'app/components/text';
+import Text from 'app/components/Text';
 import {Typography} from 'app/styles';
 
 type TextProps = PropsWithChildren<{

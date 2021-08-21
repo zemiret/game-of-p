@@ -4,7 +4,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import Text from 'app/components/text';
+import Text from 'app/components/Text';
 import {Buttons, Typography} from 'app/styles';
 
 export const Button: React.FC<ReactButtonProps> = props => (

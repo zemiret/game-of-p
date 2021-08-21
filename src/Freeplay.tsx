@@ -2,9 +2,9 @@ import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import dictionary from 'app/assets/dictionary.json';
 import {Layouts, Typography} from 'app/styles';
-import Text from 'app/components/text';
-import Button from 'app/components/button';
-import Link from 'app/components/link';
+import Text from 'app/components/Text';
+import Button from 'app/components/Button';
+import Link from 'app/components/Link';
 import {WithNavigationProp} from 'app/navigation';
 
 const sjpBaseHref = 'https://sjp.pwn.pl/szukaj/';

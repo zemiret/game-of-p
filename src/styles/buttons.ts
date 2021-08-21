@@ -5,6 +5,7 @@ interface ButtonTypes {
   btn: ViewStyle;
   big: ViewStyle;
   primary: ViewStyle;
+  roundButton: (size: number) => ViewStyle;
 }
 
 export const Buttons: ButtonTypes = {
@@ -20,4 +21,9 @@ export const Buttons: ButtonTypes = {
   primary: {
     backgroundColor: Colors.secondary,
   },
+  roundButton: (size: number): ViewStyle => ({
+    width: size,
+    height: size,
+    borderRadius: Math.ceil(size / 2),
+  }),
 };

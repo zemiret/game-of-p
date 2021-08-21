@@ -1,8 +1,8 @@
 import React from 'react';
 import {View} from 'react-native';
-import Button from 'app/components/button';
+import Button from 'app/components/Button';
 import {WithNavigationProp} from 'app/navigation';
-import Text from 'app/components/text';
+import Text from 'app/components/Text';
 
 interface OnboardingProps extends WithNavigationProp {}
 
