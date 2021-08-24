@@ -4,9 +4,17 @@ import {Colors} from 'app/styles/colors';
 interface LayoutTypes {
   container: ViewStyle;
   centered: ViewStyle;
-  pullDown: ViewStyle;
-  padded: ViewStyle;
+  pullCenterDown: ViewStyle;
+  pullTopRight: ViewStyle;
+  padded: (space?: number) => ViewStyle;
+  marginBottom: (space?: number) => ViewStyle;
 }
+
+export const Spacings = {
+  sm: 8,
+  md: 16,
+  bg: 32,
+};
 
 export const Layouts: LayoutTypes = {
   container: {
@@ -17,11 +25,18 @@ export const Layouts: LayoutTypes = {
     justifyContent: 'center',
     alignItems: 'center',
   },
-  pullDown: {
+  pullCenterDown: {
     justifyContent: 'flex-end',
     alignItems: 'center',
   },
-  padded: {
-    padding: 32,
+  pullTopRight: {
+    justifyContent: 'flex-start',
+    alignItems: 'flex-end',
   },
+  padded: (space = Spacings.bg) => ({
+    padding: space,
+  }),
+  marginBottom: (space = Spacings.bg) => ({
+    marginBottom: space,
+  }),
 };

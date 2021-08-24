@@ -6,6 +6,7 @@ import Text from 'app/components/Text';
 import Button from 'app/components/Button';
 import Link from 'app/components/Link';
 import {WithNavigationProp} from 'app/navigation';
+import IconButton from 'app/components/IconButton';
 
 const sjpBaseHref = 'https://sjp.pwn.pl/szukaj/';
 
@@ -20,7 +21,7 @@ const Freeplay: React.FC<FreeplayProps> = ({navigation}) => {
 
   return (
     <View style={styles.outerContainer}>
-      <Button title={'Back'} onPress={navigation.goBack} />
+      <IconButton onPress={navigation.goBack} name={'arrowleft'} size={70} />
 
       <View style={styles.sectionContainer}>
         <Text style={styles.mainText}>{word}</Text>
@@ -37,11 +38,11 @@ const Freeplay: React.FC<FreeplayProps> = ({navigation}) => {
 const styles = StyleSheet.create({
   outerContainer: {
     ...Layouts.container,
-    ...Layouts.padded,
+    ...Layouts.padded(),
   },
   sectionContainer: {
     ...Layouts.container,
-    ...Layouts.pullDown,
+    ...Layouts.pullCenterDown,
   },
   mainText: {
     ...Typography.h1,

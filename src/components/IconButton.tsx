@@ -20,7 +20,11 @@ export const IconButton: React.FC<IconButtonProps> = props => {
         onPress={props.onPress}
         style={Buttons.roundButton(size)}>
         <View style={styles.iconContainer}>
-          <Icon name={props.name} size={Math.floor(size * 0.6)} />
+          <Icon
+            name={props.name}
+            size={Math.floor(size * 0.6)}
+            color={Colors.secondary}
+          />
         </View>
       </TouchableOpacity>
     </Shadow>

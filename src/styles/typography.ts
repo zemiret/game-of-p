@@ -11,6 +11,8 @@ interface TypographyTypes {
   underline: TextStyle;
   h1: TextStyle;
   h2: TextStyle;
+  h3: TextStyle;
+  h4: TextStyle;
   baseSize: TextStyle;
 }
 
@@ -41,6 +43,12 @@ export const Typography: TypographyTypes = {
   },
   h2: {
     fontSize: 24,
+  },
+  h3: {
+    fontSize: 20,
+  },
+  h4: {
+    fontSize: 16,
   },
   baseSize: {
     fontSize: 14,
