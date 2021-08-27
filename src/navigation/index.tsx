@@ -53,7 +53,7 @@ const Navigation: React.FC = () => (
       screenOptions={{
         headerShown: false,
       }}
-      initialRouteName={Routes.ONBOARDING}>
+      initialRouteName={Routes.MENU}>
       <Stack.Screen name={Routes.MENU} component={Menu} />
       <Stack.Screen name={Routes.FREEPLAY} component={Freeplay} />
       <Stack.Screen name={Routes.BATTLE_MODE} component={BattleMode} />
