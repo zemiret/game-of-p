@@ -39,7 +39,9 @@ const Menu: React.FC<MenuProps> = ({navigation}) => {
 
         <Button
           title={'Ustawka'}
-          onPress={navigateAction(navigation, Routes.BATTLE_MODE)}
+          onPress={navigateAction(navigation, Routes.BATTLE_MODE_SUMMARY)}
+          // onPress={() => navigation.navigate({
+          //   name: Routes.BATTLE_MODE_SUMMARY
         />
       </View>
     </View>

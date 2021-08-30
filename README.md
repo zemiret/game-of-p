@@ -14,3 +14,4 @@ Features left to add:
 [] onboarding styling and typing
 [] start game with onboarding (then asyncStorage to do it only once)
 [] back button when oboarding from menu
+[] settings saving to async storage
