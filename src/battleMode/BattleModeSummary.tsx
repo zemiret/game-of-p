@@ -3,10 +3,8 @@ import {View} from 'react-native';
 import Text from 'app/components/Text';
 import {SettingsContext} from 'app/settings/state';
 import IconButton from 'app/components/IconButton';
-import {Routes, WithNavigationProp} from 'app/navigation';
-
-interface BattleModeProps
-  extends WithNavigationProp<Routes.BATTLE_MODE_SUMMARY> {}
+import {NavigationRouteProp, Routes} from 'app/navigation';
+import {useNavigation, useRoute} from '@react-navigation/native';
 
 const enum Team {
   BLUE = 'BLUE',
@@ -36,7 +34,10 @@ const reducer = (state: BattleState, action: Action): BattleState => {
   return state;
 };
 
-const BattleModeSummary: React.FC<BattleModeProps> = ({navigation, route}) => {
+const BattleModeSummary: React.FC = () => {
+  const navigation = useNavigation();
+  const route = useRoute<NavigationRouteProp<Routes.BATTLE_MODE_SUMMARY>>();
+
   const showScore = route.params.showScore;
 
   const settingsCtx = useContext(SettingsContext);

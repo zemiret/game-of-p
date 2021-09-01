@@ -1,41 +1,19 @@
 import Menu from 'app/Menu';
 import React from 'react';
-import {
-  createNativeStackNavigator,
-  NativeStackNavigationProp,
-} from '@react-navigation/native-stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Freeplay from 'app/Freeplay';
 import {
   NavigationContainer,
-  RouteProp as NavigationRouteProp,
+  NavigationProp,
+  RouteProp,
 } from '@react-navigation/native';
 import Settings from 'app/settings/Settings';
 import BattleModeSummary from 'app/battleMode/BattleModeSummary';
 import Onboarding from 'app/Onboarding';
 
-type NavigationProp<RouteName extends keyof NavigationParams = Routes> =
-  NativeStackNavigationProp<NavigationParams, RouteName>;
-
-type RouteProp<RouteName extends keyof NavigationParams = Routes> =
-  NavigationRouteProp<NavigationParams, RouteName>;
-
-export interface WithNavigationProp<
-  RouteName extends keyof NavigationParams = Routes,
-> {
-  navigation: NavigationProp<RouteName>;
-  route: RouteProp<RouteName>;
-}
-
 export const navigateAction =
-  (
-    navigation: NativeStackNavigationProp<
-      NavigationParams,
-      keyof NavigationParams
-    >,
-    route: Routes,
-  ) =>
-  () => {
-    navigation.navigate({name: route}, route);
+  (navigation: NavigationProp<NavigationParams>, route: Routes) => () => {
+    navigation.navigate({name: route, params: undefined});
   };
 
 export const enum Routes {
@@ -57,6 +35,15 @@ export type NavigationParams = {
   [Routes.BATTLE_MODE_SUMMARY]: BattleModeSummaryParams;
   [Routes.ONBOARDING]: undefined;
 };
+
+declare global {
+  namespace ReactNavigation {
+    interface RootParamList extends NavigationParams {}
+  }
+}
+
+export type NavigationRouteProp<RouteName extends keyof NavigationParams> =
+  RouteProp<NavigationParams, RouteName>;
 
 const Stack = createNativeStackNavigator<NavigationParams>();
 

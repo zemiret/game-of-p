@@ -5,8 +5,8 @@ import {Layouts, Typography} from 'app/styles';
 import Text from 'app/components/Text';
 import Button from 'app/components/Button';
 import Link from 'app/components/Link';
-import {WithNavigationProp} from 'app/navigation';
 import IconButton from 'app/components/IconButton';
+import {useNavigation} from '@react-navigation/native';
 
 const sjpBaseHref = 'https://sjp.pwn.pl/szukaj/';
 
@@ -14,9 +14,9 @@ const selectRandom = () => {
   return dictionary[Math.floor(Math.random() * dictionary.length)];
 };
 
-interface FreeplayProps extends WithNavigationProp {}
+const Freeplay: React.FC = () => {
+  const navigation = useNavigation();
 
-const Freeplay: React.FC<FreeplayProps> = ({navigation}) => {
   let [word, setWord] = useState<string>(selectRandom);
 
   return (

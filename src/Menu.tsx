@@ -1,14 +1,15 @@
 import React from 'react';
-import {navigateAction, Routes, WithNavigationProp} from 'app/navigation';
+import {navigateAction, Routes} from 'app/navigation';
 import {StyleSheet, View} from 'react-native';
 import Button from 'app/components/Button';
 import IconButton from 'app/components/IconButton';
 import {Layouts, Spacings, Typography} from 'app/styles';
 import Text from 'app/components/Text';
+import {useNavigation} from '@react-navigation/native';
 
-interface MenuProps extends WithNavigationProp {}
+const Menu: React.FC = () => {
+  const navigation = useNavigation();
 
-const Menu: React.FC<MenuProps> = ({navigation}) => {
   return (
     <View style={styles.outerContainer}>
       <View style={styles.topSectionContainer}>
@@ -39,9 +40,12 @@ const Menu: React.FC<MenuProps> = ({navigation}) => {
 
         <Button
           title={'Ustawka'}
-          onPress={navigateAction(navigation, Routes.BATTLE_MODE_SUMMARY)}
-          // onPress={() => navigation.navigate({
-          //   name: Routes.BATTLE_MODE_SUMMARY
+          onPress={() =>
+            navigation.navigate({
+              name: Routes.BATTLE_MODE_SUMMARY,
+              params: {showScore: false},
+            })
+          }
         />
       </View>
     </View>

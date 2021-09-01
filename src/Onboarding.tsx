@@ -1,35 +1,15 @@
 import React, {useRef} from 'react';
-import {navigateAction, Routes, WithNavigationProp} from 'app/navigation';
+import {navigateAction, Routes} from 'app/navigation';
 import {StyleSheet, View} from 'react-native';
 import Text from 'app/components/Text';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import RoundIcon from 'app/components/RoundIcon';
 import {Colors, Layouts, Spacings, Typography} from 'app/styles';
 import Spacer from 'app/components/Spacer';
+import {useNavigation} from '@react-navigation/native';
 
-interface OnboardingProps extends WithNavigationProp {}
-
-const Onboarding: React.FC<OnboardingProps> = ({navigation}) => {
-  // const slides = [
-  //   {
-  //     key: 1,
-  //     title: 'Title 1',
-  //     text: 'Description.\nSay something cool',
-  //     backgroundColor: '#59b2ab',
-  //   },
-  //   {
-  //     key: 2,
-  //     title: 'Title 2',
-  //     text: 'Other cool stuff',
-  //     backgroundColor: '#febe29',
-  //   },
-  //   {
-  //     key: 3,
-  //     title: 'Rocket guy',
-  //     text: "I'm already out of descriptions\n\nLorem ipsum bla bla bla",
-  //     backgroundColor: '#22bcb5',
-  //   },
-  // ];
+const Onboarding: React.FC = () => {
+  const navigation = useNavigation();
 
   const slides = [
     {
