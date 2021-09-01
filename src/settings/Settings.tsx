@@ -1,13 +1,13 @@
 import React, {useContext} from 'react';
 import {View} from 'react-native';
 import Button from 'app/components/Button';
-import {WithNavigationProp} from 'app/navigation';
 import Text from 'app/components/Text';
 import {SettingsActionType, SettingsContext} from 'app/settings/state';
+import {useNavigation} from '@react-navigation/native';
 
-interface SettingsProps extends WithNavigationProp {}
+const Settings: React.FC = () => {
+  const navigation = useNavigation();
 
-const Settings: React.FC<SettingsProps> = ({navigation}) => {
   const {state, dispatch} = useContext(SettingsContext);
 
   return (

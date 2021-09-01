@@ -5,6 +5,11 @@ import {
   SettingsContext,
   settingsReducer,
 } from 'app/settings/state';
+import {
+  BattleModeContext,
+  battleModeReducer,
+  battleModeStateZero,
+} from 'app/battleMode/state';
 
 const App = () => {
   const [settingsState, settingsDispatch] = useReducer(
@@ -12,10 +17,21 @@ const App = () => {
     defaultSettingsState,
   );
 
+  const [battleModeState, battleModeDispatch] = useReducer(
+    battleModeReducer,
+    battleModeStateZero,
+  );
+
   return (
     <SettingsContext.Provider
       value={{state: settingsState, dispatch: settingsDispatch}}>
-      <Navigation />
+      <BattleModeContext.Provider
+        value={{
+          state: battleModeState,
+          dispatch: battleModeDispatch,
+        }}>
+        <Navigation />
+      </BattleModeContext.Provider>
     </SettingsContext.Provider>
   );
 };

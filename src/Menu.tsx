@@ -40,12 +40,7 @@ const Menu: React.FC = () => {
 
         <Button
           title={'Ustawka'}
-          onPress={() =>
-            navigation.navigate({
-              name: Routes.BATTLE_MODE_SUMMARY,
-              params: {showScore: false},
-            })
-          }
+          onPress={navigateAction(navigation, Routes.BATTLE_MODE_INIT)}
         />
       </View>
     </View>

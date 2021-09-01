@@ -8,8 +8,11 @@ import {
   RouteProp,
 } from '@react-navigation/native';
 import Settings from 'app/settings/Settings';
-import BattleModeSummary from 'app/battleMode/BattleModeSummary';
 import Onboarding from 'app/Onboarding';
+import BattleModeInit from 'app/battleMode/BattleModeInit';
+import BattleModeSummary from 'app/battleMode/BattleModeSummary';
+import BattleModeWordChallenge from 'app/battleMode/BattleModeWordChallenge';
+import BattleModeFinalSummary from 'app/battleMode/BattleModeFinalSummary';
 
 export const navigateAction =
   (navigation: NavigationProp<NavigationParams>, route: Routes) => () => {
@@ -20,20 +23,24 @@ export const enum Routes {
   MENU = 'MENU',
   FREEPLAY = 'FREEPLAY',
   SETTINGS = 'SETTINGS',
-  BATTLE_MODE_SUMMARY = 'BATTLE_MODE_SUMMARY',
   ONBOARDING = 'ONBOARDING',
-}
 
-export interface BattleModeSummaryParams {
-  showScore: boolean;
+  BATTLE_MODE_INIT = 'BATTLE_MODE_INIT',
+  BATTLE_MODE_SUMMARY = 'BATTLE_MODE_SUMMARY',
+  BATTLE_MODE_WORD_CHALLENGE = 'BATTLE_MODE_WORD_CHALLENGE',
+  BATTLE_MODE_FINAL_SUMMARY = 'BATTLE_MODE_FINAL_SUMMARY',
 }
 
 export type NavigationParams = {
   [Routes.MENU]: undefined;
   [Routes.FREEPLAY]: undefined;
   [Routes.SETTINGS]: undefined;
-  [Routes.BATTLE_MODE_SUMMARY]: BattleModeSummaryParams;
   [Routes.ONBOARDING]: undefined;
+
+  [Routes.BATTLE_MODE_INIT]: undefined;
+  [Routes.BATTLE_MODE_SUMMARY]: undefined;
+  [Routes.BATTLE_MODE_WORD_CHALLENGE]: undefined;
+  [Routes.BATTLE_MODE_FINAL_SUMMARY]: undefined;
 };
 
 declare global {
@@ -45,24 +52,37 @@ declare global {
 export type NavigationRouteProp<RouteName extends keyof NavigationParams> =
   RouteProp<NavigationParams, RouteName>;
 
-const Stack = createNativeStackNavigator<NavigationParams>();
+export const NavigationStack = createNativeStackNavigator<NavigationParams>();
 
 const Navigation: React.FC = () => (
   <NavigationContainer>
-    <Stack.Navigator
+    <NavigationStack.Navigator
       screenOptions={{
         headerShown: false,
       }}
       initialRouteName={Routes.MENU}>
-      <Stack.Screen name={Routes.MENU} component={Menu} />
-      <Stack.Screen name={Routes.FREEPLAY} component={Freeplay} />
-      <Stack.Screen
+      <NavigationStack.Screen name={Routes.MENU} component={Menu} />
+      <NavigationStack.Screen name={Routes.FREEPLAY} component={Freeplay} />
+      <NavigationStack.Screen name={Routes.SETTINGS} component={Settings} />
+      <NavigationStack.Screen name={Routes.ONBOARDING} component={Onboarding} />
+
+      <NavigationStack.Screen
+        name={Routes.BATTLE_MODE_INIT}
+        component={BattleModeInit}
+      />
+      <NavigationStack.Screen
         name={Routes.BATTLE_MODE_SUMMARY}
         component={BattleModeSummary}
       />
-      <Stack.Screen name={Routes.SETTINGS} component={Settings} />
-      <Stack.Screen name={Routes.ONBOARDING} component={Onboarding} />
-    </Stack.Navigator>
+      <NavigationStack.Screen
+        name={Routes.BATTLE_MODE_WORD_CHALLENGE}
+        component={BattleModeWordChallenge}
+      />
+      <NavigationStack.Screen
+        name={Routes.BATTLE_MODE_FINAL_SUMMARY}
+        component={BattleModeFinalSummary}
+      />
+    </NavigationStack.Navigator>
   </NavigationContainer>
 );
 
