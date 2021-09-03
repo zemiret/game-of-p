@@ -64,7 +64,7 @@ export const battleModeSlice = createSlice({
       state[Team.BLUE].score = 0;
       state[Team.RED].score = 0;
       const [words1, words2] = splitWords(
-        Words.selectBatch(action.payload.battleModeWordsCount * 2),
+        Words.selectBatch(action.payload.battleModeRoundNumber * 2),
       );
       state[Team.BLUE].wordList = words1;
       state[Team.RED].wordList = words2;
@@ -110,14 +110,9 @@ export const selectBlueTeamDetails = createSelector(
   state => state[Team.BLUE],
 );
 
-export const selectCountdownTimeForDisplay = createSelector(
+export const selectCountdownTime = createSelector(
   selectBattleMode,
   state => state.countdownTime,
-);
-
-export const selectCountdownTimeForTicker = createSelector(
-  selectBattleMode,
-  state => state.countdownTime * 1000,
 );
 
 export const selectRoundNumberForDisplay = createSelector(
@@ -130,7 +125,22 @@ export const selectTotalRoundNumberForDisplay = createSelector(
   state => state.totalRoundNumber + 1,
 );
 
-export const selectIsFinished = createSelector(
+export const selectIsLastTurn = createSelector(
   selectBattleMode,
   state => state.roundNumber === state.totalRoundNumber,
 );
+
+export const selectCurrentWord = createSelector(
+  selectBattleMode,
+  state => state[state.currentTeam].wordList[state.roundNumber],
+);
+
+export const selectWinner = createSelector(selectBattleMode, state => {
+  if (state[Team.BLUE].score > state[Team.RED].score) {
+    return Team.BLUE;
+  } else if (state[Team.RED].score > state[Team.BLUE].score) {
+    return Team.RED;
+  } else {
+    return null;
+  }
+});

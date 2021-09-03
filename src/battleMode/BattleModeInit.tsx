@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View} from 'react-native';
 import IconButton from 'app/components/IconButton';
 import {navigateAction, Routes} from 'app/navigation';
@@ -7,7 +7,7 @@ import Button from 'app/components/Button';
 import {useDispatch, useSelector} from 'app/state/hooks';
 import {
   init,
-  selectCountdownTimeForDisplay,
+  selectCountdownTime,
   selectCurrentTeam,
 } from 'app/battleMode/state';
 import {selectSettings} from 'app/settings/state';
@@ -15,14 +15,15 @@ import Text from 'app/components/Text';
 
 const BattleModeInit: React.FC = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const settings = useSelector(selectSettings);
   const currentTeam = useSelector(selectCurrentTeam);
+  const timer = useSelector(selectCountdownTime);
 
-  const dispatch = useDispatch();
-  dispatch(init(settings));
-
-  const timer = useSelector(selectCountdownTimeForDisplay);
+  useEffect(() => {
+    dispatch(init(settings));
+  });
 
   return (
     <View>
