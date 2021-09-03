@@ -1,20 +1,28 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {View} from 'react-native';
 import Text from 'app/components/Text';
 import {navigateAction, Routes} from 'app/navigation';
 import {useNavigation} from '@react-navigation/native';
-import {BattleModeContext, Team} from 'app/battleMode/state';
+import {
+  selectBlueTeamDetails,
+  selectCurrentTeam,
+  selectRedTeamDetails,
+} from 'app/battleMode/state';
 import Button from 'app/components/Button';
+import {useSelector} from 'app/state/hooks';
 
 const BattleModeSummary: React.FC = () => {
   const navigation = useNavigation();
-  const {state} = useContext(BattleModeContext);
+
+  const currentTeam = useSelector(selectCurrentTeam);
+  const redTeam = useSelector(selectRedTeamDetails);
+  const blueTeam = useSelector(selectBlueTeamDetails);
 
   return (
     <View>
-      <Text>{state.currentTeam}</Text>
-      <Text>BLUE: {state[Team.BLUE].score}</Text>
-      <Text>RED: {state[Team.RED].score}</Text>
+      <Text>{currentTeam}</Text>
+      <Text>BLUE: {blueTeam.score}</Text>
+      <Text>RED: {redTeam.score}</Text>
       <Button
         title={'Start'}
         onPress={navigateAction(navigation, Routes.BATTLE_MODE_WORD_CHALLENGE)}

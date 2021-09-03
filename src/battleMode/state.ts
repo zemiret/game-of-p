@@ -1,44 +1,15 @@
-import {defaultSettingsState, SettingsState} from 'app/settings/state';
+import {createSelector, createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {SettingsState} from 'app/settings/state';
 import {Words} from 'app/services/words';
-import React, {Dispatch, ReducerAction, ReducerState} from 'react';
+import {RootState} from 'app/state/store';
 
 export const enum Team {
   BLUE = 'BLUE',
   RED = 'RED',
 }
 
-export const enum BattleActionType {
-  INIT = 'INIT',
-  SET_CURRENT_TEAM = 'SET_CURRENT_TEAM',
-  SET_ROUND_NUMBER = 'SET_ROUND_NUMBER',
-  SET_COUNTDOWN_TIME = 'SET_COUNTDOWN_TIME',
-  SET_SCORE = 'SET_SCORE',
-}
-
-export type BattleAction =
-  | {
-      type: BattleActionType.INIT;
-      payload: SettingsState;
-    }
-  | {
-      type: BattleActionType.SET_CURRENT_TEAM;
-      payload: Team;
-    }
-  | {
-      type: BattleActionType.SET_ROUND_NUMBER;
-      payload: number;
-    }
-  | {
-      type: BattleActionType.SET_COUNTDOWN_TIME;
-      payload: number;
-    }
-  | {
-      type: BattleActionType.SET_SCORE;
-      team: Team;
-      score: number;
-    };
-
 export interface TeamState {
+  turnNumber: number;
   score: number;
   // wordList should be generated in advance to avoid duplicates
   wordList: string[];
@@ -46,93 +17,120 @@ export interface TeamState {
 
 export interface BattleState {
   currentTeam: Team;
+  totalRoundNumber: number;
+  roundNumber: number;
+  initialCountdownTime: number;
   // in seconds the time left for the current team
   countdownTime: number;
-  roundNumber: number;
   [Team.BLUE]: TeamState;
   [Team.RED]: TeamState;
 }
+
+const initialState: BattleState = {
+  currentTeam: Team.RED,
+  totalRoundNumber: 0,
+  roundNumber: 0,
+  initialCountdownTime: 0,
+  countdownTime: 0,
+  [Team.BLUE]: {
+    turnNumber: 0,
+    score: 0,
+    wordList: [],
+  },
+  [Team.RED]: {
+    turnNumber: 0,
+    score: 0,
+    wordList: [],
+  },
+};
 
 const splitWords = (words: string[]): [string[], string[]] => {
   const halfIdx = Math.floor(words.length / 2);
   return [words.slice(0, halfIdx), words.slice(halfIdx)];
 };
 
-export const battleModeInitialState = (
-  settings: SettingsState,
-): BattleState => {
-  const [redWords, blueWords] = splitWords(
-    Words.selectBatch(settings.battleModeWordsCount * 2),
-  );
+export const battleModeSlice = createSlice({
+  name: 'battleMode',
+  initialState,
+  reducers: {
+    init(state, action: PayloadAction<SettingsState>) {
+      const settings = action.payload;
 
-  return {
-    currentTeam: Team.RED,
-    countdownTime: settings.battleModeRoundTime,
-    roundNumber: 0,
-    [Team.BLUE]: {
-      score: 0,
-      wordList: blueWords,
+      state.initialCountdownTime = settings.battleModeRoundTime;
+      state.totalRoundNumber = settings.battleModeRoundNumber;
+
+      state.countdownTime = state.initialCountdownTime;
+      state.roundNumber = 0;
+      state[Team.BLUE].score = 0;
+      state[Team.RED].score = 0;
+      const [words1, words2] = splitWords(
+        Words.selectBatch(action.payload.battleModeWordsCount * 2),
+      );
+      state[Team.BLUE].wordList = words1;
+      state[Team.RED].wordList = words2;
     },
-    [Team.RED]: {
-      score: 0,
-      wordList: redWords,
+    countdown(state) {
+      state.countdownTime--;
     },
-  };
-};
-
-export const battleModeReducer = (
-  state: BattleState,
-  action: BattleAction,
-): BattleState => {
-  switch (action.type) {
-    case BattleActionType.INIT:
-      return battleModeInitialState(action.payload);
-    case BattleActionType.SET_CURRENT_TEAM:
-      return {
-        ...state,
-        currentTeam: action.payload,
-      };
-    case BattleActionType.SET_ROUND_NUMBER:
-      if (action.payload < 0) {
-        return state;
+    endTurn(state, action: PayloadAction<boolean>) {
+      const guessed = action.payload;
+      state[state.currentTeam].turnNumber++;
+      if (guessed) {
+        state[state.currentTeam].score++;
       }
-      return {
-        ...state,
-        roundNumber: action.payload,
-      };
-    case BattleActionType.SET_COUNTDOWN_TIME:
-      if (action.payload < 0) {
-        return state;
+      state.currentTeam = state.currentTeam === Team.RED ? Team.BLUE : Team.RED;
+      state.countdownTime = state.initialCountdownTime;
+
+      if (state[Team.RED].turnNumber === state[Team.BLUE].turnNumber) {
+        // end round
+        state.roundNumber++;
       }
-      return {
-        ...state,
-        countdownTime: action.payload,
-      };
-    case BattleActionType.SET_SCORE:
-      if (action.score < 0) {
-        return state;
-      }
-      return {
-        ...state,
-        [action.team]: {
-          ...state[action.team],
-          score: action.score,
-        },
-      };
-    default:
-      return state;
-  }
-};
-
-// We just initialize with default settings. Actual ones will be used when we actually init the battle sequence
-export const battleModeStateZero = battleModeInitialState(defaultSettingsState);
-
-export interface BattleModeContextState {
-  state: ReducerState<typeof battleModeReducer>;
-  dispatch: Dispatch<ReducerAction<typeof battleModeReducer>>;
-}
-
-export const BattleModeContext = React.createContext<BattleModeContextState>({
-  state: battleModeStateZero,
-  dispatch: () => undefined,
+    },
+  },
 });
+
+export const {init, countdown, endTurn} = battleModeSlice.actions;
+
+export default battleModeSlice.reducer;
+
+const selectBattleMode = (state: RootState) => state.battleMode;
+
+export const selectCurrentTeam = createSelector(
+  selectBattleMode,
+  state => state.currentTeam,
+);
+
+export const selectRedTeamDetails = createSelector(
+  selectBattleMode,
+  state => state[Team.RED],
+);
+
+export const selectBlueTeamDetails = createSelector(
+  selectBattleMode,
+  state => state[Team.BLUE],
+);
+
+export const selectCountdownTimeForDisplay = createSelector(
+  selectBattleMode,
+  state => state.countdownTime,
+);
+
+export const selectCountdownTimeForTicker = createSelector(
+  selectBattleMode,
+  state => state.countdownTime * 1000,
+);
+
+export const selectRoundNumberForDisplay = createSelector(
+  selectBattleMode,
+  state => state.roundNumber + 1,
+);
+
+export const selectTotalRoundNumberForDisplay = createSelector(
+  selectBattleMode,
+  state => state.totalRoundNumber + 1,
+);
+
+export const selectIsFinished = createSelector(
+  selectBattleMode,
+  state => state.roundNumber === state.totalRoundNumber,
+);
