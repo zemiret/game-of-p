@@ -32,7 +32,9 @@ const BattleModeSummary: React.FC = () => {
       <Text>RED: {redTeam.score}</Text>
       <Button
         title={'Start'}
-        onPress={navigateAction(navigation, Routes.BATTLE_MODE_WORD_CHALLENGE)}
+        onPress={() => {
+          navigateAction(navigation, Routes.BATTLE_MODE_WORD_CHALLENGE)();
+        }}
       />
     </View>
   );

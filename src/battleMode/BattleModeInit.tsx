@@ -23,7 +23,7 @@ const BattleModeInit: React.FC = () => {
 
   useEffect(() => {
     dispatch(init(settings));
-  });
+  }, [dispatch, settings]);
 
   return (
     <View>

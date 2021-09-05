@@ -93,7 +93,7 @@ export const {init, countdown, endTurn} = battleModeSlice.actions;
 
 export default battleModeSlice.reducer;
 
-const selectBattleMode = (state: RootState) => state.battleMode;
+export const selectBattleMode = (state: RootState) => state.battleMode;
 
 export const selectCurrentTeam = createSelector(
   selectBattleMode,
@@ -122,7 +122,7 @@ export const selectRoundNumberForDisplay = createSelector(
 
 export const selectTotalRoundNumberForDisplay = createSelector(
   selectBattleMode,
-  state => state.totalRoundNumber + 1,
+  state => state.totalRoundNumber,
 );
 
 export const selectIsLastTurn = createSelector(

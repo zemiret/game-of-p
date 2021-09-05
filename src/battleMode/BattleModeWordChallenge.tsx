@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Layouts} from 'app/styles';
 import Text from 'app/components/Text';
@@ -21,14 +21,26 @@ const BattleModeWordChallenge: React.FC = () => {
   const isLastTurn = useSelector(selectIsLastTurn);
   const countdownTime = useSelector(selectCountdownTime);
 
+  const [turnEndSwitch, setTurnEndSwitch] = useState(false);
+  const [isInited, setIsInited] = useState(false);
+
   const handleEndTurn = (success: boolean) => {
     dispatch(endTurn(success));
-    if (isLastTurn) {
-      navigateAction(navigation, Routes.BATTLE_MODE_FINAL_SUMMARY)();
-    } else {
-      navigateAction(navigation, Routes.BATTLE_MODE_SUMMARY)();
-    }
+    setTurnEndSwitch(s => !s);
   };
+
+  useEffect(() => {
+    if (isInited) {
+      if (isLastTurn) {
+        navigateAction(navigation, Routes.BATTLE_MODE_FINAL_SUMMARY)();
+      } else {
+        navigateAction(navigation, Routes.BATTLE_MODE_SUMMARY)();
+      }
+    } else {
+      setIsInited(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [turnEndSwitch]);
 
   return (
     <View style={styles.outerContainer}>
