@@ -1,11 +1,14 @@
 import Menu from 'app/Menu';
 import React from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {
+  createNativeStackNavigator,
+  NativeStackNavigationProp,
+} from '@react-navigation/native-stack';
 import Freeplay from 'app/Freeplay';
 import {
   NavigationContainer,
-  NavigationProp,
   RouteProp,
+  NavigationProp as BaseNavigationProp,
 } from '@react-navigation/native';
 import Settings from 'app/settings/Settings';
 import Onboarding from 'app/Onboarding';
@@ -15,7 +18,7 @@ import BattleModeWordChallenge from 'app/battleMode/BattleModeWordChallenge';
 import BattleModeFinalSummary from 'app/battleMode/BattleModeFinalSummary';
 
 export const navigateAction =
-  (navigation: NavigationProp<NavigationParams>, route: Routes) => () => {
+  (navigation: BaseNavigationProp<NavigationParams>, route: Routes) => () => {
     navigation.navigate({name: route, params: undefined});
   };
 
@@ -51,6 +54,9 @@ declare global {
 
 export type NavigationRouteProp<RouteName extends keyof NavigationParams> =
   RouteProp<NavigationParams, RouteName>;
+
+export type NavigationProp<RouteName extends keyof NavigationParams> =
+  NativeStackNavigationProp<NavigationParams, RouteName>;
 
 export const NavigationStack = createNativeStackNavigator<NavigationParams>();
 

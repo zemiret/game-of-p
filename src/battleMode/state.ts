@@ -16,6 +16,7 @@ export interface TeamState {
 }
 
 export interface BattleState {
+  wordChallenge: string;
   currentTeam: Team;
   totalRoundNumber: number;
   roundNumber: number;
@@ -27,6 +28,7 @@ export interface BattleState {
 }
 
 const initialState: BattleState = {
+  wordChallenge: '',
   currentTeam: Team.RED,
   totalRoundNumber: 0,
   roundNumber: 0,
@@ -86,10 +88,15 @@ export const battleModeSlice = createSlice({
         state.roundNumber++;
       }
     },
+    bumpWordChallenge(state) {
+      state.wordChallenge =
+        state[state.currentTeam].wordList[state.roundNumber];
+    },
   },
 });
 
-export const {init, countdown, endTurn} = battleModeSlice.actions;
+export const {init, countdown, endTurn, bumpWordChallenge} =
+  battleModeSlice.actions;
 
 export default battleModeSlice.reducer;
 
@@ -132,7 +139,7 @@ export const selectIsLastTurn = createSelector(
 
 export const selectCurrentWord = createSelector(
   selectBattleMode,
-  state => state[state.currentTeam].wordList[state.roundNumber],
+  state => state.wordChallenge,
 );
 
 export const selectWinner = createSelector(selectBattleMode, state => {

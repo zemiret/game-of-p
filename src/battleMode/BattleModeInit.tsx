@@ -6,6 +6,7 @@ import {useNavigation} from '@react-navigation/native';
 import Button from 'app/components/Button';
 import {useDispatch, useSelector} from 'app/state/hooks';
 import {
+  bumpWordChallenge,
   init,
   selectCountdownTime,
   selectCurrentTeam,
@@ -23,6 +24,7 @@ const BattleModeInit: React.FC = () => {
 
   useEffect(() => {
     dispatch(init(settings));
+    dispatch(bumpWordChallenge());
   }, [dispatch, settings]);
 
   return (
