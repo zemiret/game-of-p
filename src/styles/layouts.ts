@@ -3,6 +3,7 @@ import {Colors} from 'app/styles/colors';
 
 interface LayoutTypes {
   container: ViewStyle;
+  row: ViewStyle;
   centered: ViewStyle;
   pullCenterDown: ViewStyle;
   pullTopRight: ViewStyle;
@@ -20,6 +21,9 @@ export const Layouts: LayoutTypes = {
   container: {
     flex: 1,
     backgroundColor: Colors.accent,
+  },
+  row: {
+    flexDirection: 'row',
   },
   centered: {
     justifyContent: 'center',
