@@ -12,6 +12,7 @@ import {
   selectIsLastTurn,
 } from 'app/battleMode/state';
 import {useDispatch, useSelector} from 'app/state/hooks';
+import Link from 'app/components/Link';
 
 const BattleModeWordChallenge: React.FC = () => {
   const navigation =
@@ -82,6 +83,13 @@ const BattleModeWordChallenge: React.FC = () => {
     }
   }, [countdownTime, dispatch]);
 
+  const quitToMenu = () => {
+    navigateAction(navigation, Routes.MENU)();
+    if (countdownInterval != null) {
+      clearInterval(countdownInterval);
+    }
+  };
+
   return (
     <View style={styles.outerContainer}>
       <Text>Word challenge</Text>
@@ -89,8 +97,9 @@ const BattleModeWordChallenge: React.FC = () => {
       <Text>{word}</Text>
 
       <Button title={'Udało się'} onPress={() => handleEndTurn(true)} />
-
       <Button title={'Poddaj się'} onPress={() => handleEndTurn(false)} />
+
+      <Link text={'Zakończ grę'} onPress={quitToMenu} />
     </View>
   );
 };

@@ -15,7 +15,7 @@ The problem is that the currentTeam/roundNumber changes and the new word is drop
 before navigation happens. Adding wordChallenge to reducer's state does not help
 because it is still dependant on the `currentTeam` state
 [x] timer
-[] exit links under screens
+[x] exit links under screens
 [] settings (dark mode?, team settings (countdown time, word amount))
 [] onboarding styling and typing
 [] battle mode styling

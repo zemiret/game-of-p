@@ -13,6 +13,7 @@ import {
 } from 'app/battleMode/state';
 import Button from 'app/components/Button';
 import {useDispatch, useSelector} from 'app/state/hooks';
+import Link from 'app/components/Link';
 
 const BattleModeSummary: React.FC = () => {
   const navigation =
@@ -45,6 +46,11 @@ const BattleModeSummary: React.FC = () => {
         onPress={() => {
           navigateAction(navigation, Routes.BATTLE_MODE_WORD_CHALLENGE)();
         }}
+      />
+
+      <Link
+        text={'Zakończ grę'}
+        onPress={navigateAction(navigation, Routes.MENU)}
       />
     </View>
   );
