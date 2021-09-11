@@ -7,7 +7,7 @@ export interface SettingsState {
 }
 
 const initialState: SettingsState = {
-  battleModeRoundTime: 10,
+  battleModeRoundTime: 3,
   battleModeRoundNumber: 2,
 };
 

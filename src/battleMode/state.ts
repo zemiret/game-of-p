@@ -20,8 +20,6 @@ export interface BattleState {
   currentTeam: Team;
   totalRoundNumber: number;
   roundNumber: number;
-  initialCountdownTime: number;
-  // in seconds the time left for the current team
   countdownTime: number;
   [Team.BLUE]: TeamState;
   [Team.RED]: TeamState;
@@ -32,7 +30,6 @@ const initialState: BattleState = {
   currentTeam: Team.RED,
   totalRoundNumber: 0,
   roundNumber: 0,
-  initialCountdownTime: 0,
   countdownTime: 0,
   [Team.BLUE]: {
     turnNumber: 0,
@@ -58,10 +55,9 @@ export const battleModeSlice = createSlice({
     init(state, action: PayloadAction<SettingsState>) {
       const settings = action.payload;
 
-      state.initialCountdownTime = settings.battleModeRoundTime;
+      state.countdownTime = settings.battleModeRoundTime;
       state.totalRoundNumber = settings.battleModeRoundNumber;
 
-      state.countdownTime = state.initialCountdownTime;
       state.roundNumber = 0;
       state[Team.BLUE].score = 0;
       state[Team.RED].score = 0;
@@ -81,7 +77,6 @@ export const battleModeSlice = createSlice({
         state[state.currentTeam].score++;
       }
       state.currentTeam = state.currentTeam === Team.RED ? Team.BLUE : Team.RED;
-      state.countdownTime = state.initialCountdownTime;
 
       if (state[Team.RED].turnNumber === state[Team.BLUE].turnNumber) {
         // end round
