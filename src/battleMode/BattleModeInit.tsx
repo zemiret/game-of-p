@@ -9,7 +9,8 @@ import {
   bumpWordChallenge,
   init,
   selectCountdownTime,
-  selectCurrentTeam,
+  selectCurrentTeamForDisplay,
+  selectTotalRoundNumberForDisplay,
 } from 'app/battleMode/state';
 import {selectSettings} from 'app/settings/state';
 import Text from 'app/components/Text';
@@ -19,8 +20,9 @@ const BattleModeInit: React.FC = () => {
   const dispatch = useDispatch();
 
   const settings = useSelector(selectSettings);
-  const currentTeam = useSelector(selectCurrentTeam);
+  const currentTeam = useSelector(selectCurrentTeamForDisplay);
   const timer = useSelector(selectCountdownTime);
+  const roundNumber = useSelector(selectTotalRoundNumberForDisplay);
 
   useEffect(() => {
     dispatch(init(settings));
@@ -30,8 +32,9 @@ const BattleModeInit: React.FC = () => {
   return (
     <View>
       <IconButton onPress={navigation.goBack} name={'arrowleft'} size={70} />
-      <Text>{currentTeam}</Text>
-      <Text>{timer}</Text>
+      <Text>Rozpoczyna: {currentTeam}</Text>
+      <Text>Liczba rund: {roundNumber}</Text>
+      <Text>Czas na rundę: {timer}</Text>
       <Button
         title={'Start'}
         onPress={navigateAction(navigation, Routes.BATTLE_MODE_WORD_CHALLENGE)}

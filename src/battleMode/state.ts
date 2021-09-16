@@ -97,7 +97,7 @@ export default battleModeSlice.reducer;
 
 export const selectBattleMode = (state: RootState) => state.battleMode;
 
-export const selectCurrentTeam = createSelector(
+export const selectCurrentTeamForDisplay = createSelector(
   selectBattleMode,
   state => state.currentTeam,
 );

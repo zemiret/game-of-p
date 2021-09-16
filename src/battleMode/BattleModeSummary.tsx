@@ -6,7 +6,7 @@ import {useNavigation} from '@react-navigation/native';
 import {
   bumpWordChallenge,
   selectBlueTeamDetails,
-  selectCurrentTeam,
+  selectCurrentTeamForDisplay,
   selectRedTeamDetails,
   selectRoundNumberForDisplay,
   selectTotalRoundNumberForDisplay,
@@ -22,7 +22,7 @@ const BattleModeSummary: React.FC = () => {
 
   const roundNumber = useSelector(selectRoundNumberForDisplay);
   const totalRoundNumber = useSelector(selectTotalRoundNumberForDisplay);
-  const currentTeam = useSelector(selectCurrentTeam);
+  const currentTeam = useSelector(selectCurrentTeamForDisplay);
   const redTeam = useSelector(selectRedTeamDetails);
   const blueTeam = useSelector(selectBlueTeamDetails);
 

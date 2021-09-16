@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   },
   bottomSectionContainer: {
     ...Layouts.container,
-    ...Layouts.pullCenterDown,
+    ...Layouts.pullDownCenter,
   },
   menuItemSpacedBg: {
     ...Layouts.marginBottom(Spacings.bg),

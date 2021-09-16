@@ -40,10 +40,10 @@ const styles = StyleSheet.create({
   outerContainer: {
     ...Layouts.container,
     ...Layouts.padded(),
+    ...Layouts.justifySpaceBetween,
   },
   sectionContainer: {
-    ...Layouts.container,
-    ...Layouts.pullCenterDown,
+    ...Layouts.alignCenter,
   },
   mainText: {
     ...Typography.h1,
