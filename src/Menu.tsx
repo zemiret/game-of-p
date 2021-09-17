@@ -29,7 +29,7 @@ const Menu: React.FC = () => {
 
       <View style={styles.bottomSectionContainer}>
         <Text style={[styles.gameTypeHeader, styles.menuItemSpacedMd]}>
-          Tryb rozgrywki:
+          Tryb rozgrywki
         </Text>
 
         <Button

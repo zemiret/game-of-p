@@ -76,28 +76,28 @@ export const battleModeSlice = createSlice({
       if (guessed) {
         state[state.currentTeam].score++;
       }
-      state.currentTeam = state.currentTeam === Team.RED ? Team.BLUE : Team.RED;
 
       if (state[Team.RED].turnNumber === state[Team.BLUE].turnNumber) {
         // end round
         state.roundNumber++;
       }
     },
-    bumpWordChallenge(state) {
+    bumpSharedTeamState(state) {
       state.wordChallenge =
         state[state.currentTeam].wordList[state.roundNumber];
+      state.currentTeam = state.currentTeam === Team.RED ? Team.BLUE : Team.RED;
     },
   },
 });
 
-export const {init, countdown, endTurn, bumpWordChallenge} =
+export const {init, countdown, endTurn, bumpSharedTeamState} =
   battleModeSlice.actions;
 
 export default battleModeSlice.reducer;
 
 export const selectBattleMode = (state: RootState) => state.battleMode;
 
-export const selectCurrentTeamForDisplay = createSelector(
+export const selectCurrentTeam = createSelector(
   selectBattleMode,
   state => state.currentTeam,
 );

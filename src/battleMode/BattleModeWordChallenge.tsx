@@ -8,12 +8,14 @@ import {navigateAction, NavigationProp, Routes} from 'app/navigation';
 import {
   endTurn,
   selectCountdownTime,
+  selectCurrentTeam,
   selectCurrentWord,
   selectIsLastTurn,
 } from 'app/battleMode/state';
 import {useDispatch, useSelector} from 'app/state/hooks';
 import Link from 'app/components/Link';
 import Icon from 'react-native-vector-icons/AntDesign';
+import {teamBorder} from 'app/battleMode/styles';
 
 const BattleModeWordChallenge: React.FC = () => {
   const navigation =
@@ -23,6 +25,7 @@ const BattleModeWordChallenge: React.FC = () => {
   const word = useSelector(selectCurrentWord);
   const isLastTurn = useSelector(selectIsLastTurn);
   const totalCountdownTime = useSelector(selectCountdownTime);
+  const currentTeam = useSelector(selectCurrentTeam);
 
   const [countdownTime, setCountdownTime] = useState(totalCountdownTime);
   // turnEndSwitch and isInited are only used to trigger end of turn navigation
@@ -92,10 +95,10 @@ const BattleModeWordChallenge: React.FC = () => {
   };
 
   return (
-    <View style={styles.outerContainer}>
+    <View style={[styles.outerContainer, teamBorder(currentTeam)]}>
       <View style={styles.sectionContainer}>
-        <Icon name={'clockcircleo'} color={Colors.primary} />
-        <Text style={Typography.h3}>{countdownTime}</Text>
+        <Icon name={'clockcircleo'} color={Colors.secondary} />
+        <Text style={styles.timeText}>{countdownTime}</Text>
       </View>
 
       <View style={styles.sectionContainer}>
@@ -118,9 +121,6 @@ const styles = StyleSheet.create({
     ...Layouts.container,
     ...Layouts.padded(),
     ...Layouts.justifySpaceBetween,
-    // TODO: Extract this border "functionality" (because every component here will use i) + actually make it change
-    borderWidth: 15,
-    borderColor: Colors.opposite,
   },
   sectionContainer: {
     ...Layouts.alignCenter,
@@ -131,6 +131,10 @@ const styles = StyleSheet.create({
   },
   spacer: {
     ...Layouts.padded(Spacings.sm),
+  },
+  timeText: {
+    ...Typography.h3,
+    color: Colors.secondary,
   },
 });
 

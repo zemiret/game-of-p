@@ -8,7 +8,7 @@ export interface SettingsState {
 
 const initialState: SettingsState = {
   battleModeRoundTime: 60,
-  battleModeRoundNumber: 3,
+  battleModeRoundNumber: 1,
 };
 
 export const settingsSlice = createSlice({
