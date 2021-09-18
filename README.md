@@ -16,9 +16,10 @@ before navigation happens. Adding wordChallenge to reducer's state does not help
 because it is still dependant on the `currentTeam` state
 [x] timer
 [x] exit links under screens
-[] settings (dark mode?, team settings (countdown time, word amount))
-[] onboarding styling and typing
-[] battle mode styling
+[x] settings (dark mode?, team settings (countdown time, word amount))
+[x] battle mode styling
 [] start game with onboarding (then asyncStorage to do it only once)
+[x] settings saving to async storage
+[] onboarding styling and typing
 [] back button when oboarding from menu
-[] settings saving to async storage
+[] icon

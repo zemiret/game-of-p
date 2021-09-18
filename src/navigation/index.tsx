@@ -1,5 +1,5 @@
 import Menu from 'app/Menu';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   createNativeStackNavigator,
   NativeStackNavigationProp,
@@ -16,6 +16,8 @@ import BattleModeInit from 'app/battleMode/BattleModeInit';
 import BattleModeSummary from 'app/battleMode/BattleModeSummary';
 import BattleModeWordChallenge from 'app/battleMode/BattleModeWordChallenge';
 import BattleModeFinalSummary from 'app/battleMode/BattleModeFinalSummary';
+import {fetchDefaultStoredSettings} from 'app/settings/state';
+import {useDispatch} from 'app/state/hooks';
 
 export const navigateAction =
   (navigation: BaseNavigationProp<NavigationParams>, route: Routes) => () => {
@@ -60,36 +62,48 @@ export type NavigationProp<RouteName extends keyof NavigationParams> =
 
 export const NavigationStack = createNativeStackNavigator<NavigationParams>();
 
-const Navigation: React.FC = () => (
-  <NavigationContainer>
-    <NavigationStack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-      initialRouteName={Routes.MENU}>
-      <NavigationStack.Screen name={Routes.MENU} component={Menu} />
-      <NavigationStack.Screen name={Routes.FREEPLAY} component={Freeplay} />
-      <NavigationStack.Screen name={Routes.SETTINGS} component={Settings} />
-      <NavigationStack.Screen name={Routes.ONBOARDING} component={Onboarding} />
+const Navigation: React.FC = () => {
+  const dispatch = useDispatch();
 
-      <NavigationStack.Screen
-        name={Routes.BATTLE_MODE_INIT}
-        component={BattleModeInit}
-      />
-      <NavigationStack.Screen
-        name={Routes.BATTLE_MODE_SUMMARY}
-        component={BattleModeSummary}
-      />
-      <NavigationStack.Screen
-        name={Routes.BATTLE_MODE_WORD_CHALLENGE}
-        component={BattleModeWordChallenge}
-      />
-      <NavigationStack.Screen
-        name={Routes.BATTLE_MODE_FINAL_SUMMARY}
-        component={BattleModeFinalSummary}
-      />
-    </NavigationStack.Navigator>
-  </NavigationContainer>
-);
+  useEffect(() => {
+    dispatch(fetchDefaultStoredSettings());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return (
+    <NavigationContainer>
+      <NavigationStack.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+        initialRouteName={Routes.MENU}>
+        <NavigationStack.Screen name={Routes.MENU} component={Menu} />
+        <NavigationStack.Screen name={Routes.FREEPLAY} component={Freeplay} />
+        <NavigationStack.Screen name={Routes.SETTINGS} component={Settings} />
+        <NavigationStack.Screen
+          name={Routes.ONBOARDING}
+          component={Onboarding}
+        />
+
+        <NavigationStack.Screen
+          name={Routes.BATTLE_MODE_INIT}
+          component={BattleModeInit}
+        />
+        <NavigationStack.Screen
+          name={Routes.BATTLE_MODE_SUMMARY}
+          component={BattleModeSummary}
+        />
+        <NavigationStack.Screen
+          name={Routes.BATTLE_MODE_WORD_CHALLENGE}
+          component={BattleModeWordChallenge}
+        />
+        <NavigationStack.Screen
+          name={Routes.BATTLE_MODE_FINAL_SUMMARY}
+          component={BattleModeFinalSummary}
+        />
+      </NavigationStack.Navigator>
+    </NavigationContainer>
+  );
+};
 
 export default Navigation;
