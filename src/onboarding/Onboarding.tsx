@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {navigateAction, Routes} from 'app/navigation';
 import {StyleSheet, View} from 'react-native';
 import Text from 'app/components/Text';
@@ -7,9 +7,16 @@ import RoundIcon from 'app/components/RoundIcon';
 import {Colors, Layouts, Spacings, Typography} from 'app/styles';
 import Spacer from 'app/components/Spacer';
 import {useNavigation} from '@react-navigation/native';
+import {useDispatch} from 'app/state/hooks';
+import {setOnboardingSeen} from 'app/onboarding/state';
 
 const Onboarding: React.FC = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setOnboardingSeen());
+  }, [dispatch]);
 
   const slides = [
     {

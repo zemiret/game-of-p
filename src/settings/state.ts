@@ -12,7 +12,7 @@ export interface SettingsState {
   battleModeRoundNumber: number;
 }
 
-const enum AsyncStorageKeys {
+const enum PersistentStorageKey {
   BATTLE_MODE_ROUND_TIME = 'BATTLE_MODE_ROUND_TIME',
   BATTLE_MODE_ROUND_NUMBER = 'BATTLE_MODE_ROUND_NUMBER',
 }
@@ -28,7 +28,7 @@ export const fetchDefaultStoredSettings = createAsyncThunk(
     const battleModeRoundNumber = Number(
       JSON.parse(
         await PersistentStorage.getOrDefault(
-          AsyncStorageKeys.BATTLE_MODE_ROUND_NUMBER,
+          PersistentStorageKey.BATTLE_MODE_ROUND_NUMBER,
           JSON.stringify(initialState.battleModeRoundNumber),
         ),
       ),
@@ -37,7 +37,7 @@ export const fetchDefaultStoredSettings = createAsyncThunk(
     const battleModeRoundTime = Number(
       JSON.parse(
         await PersistentStorage.getOrDefault(
-          AsyncStorageKeys.BATTLE_MODE_ROUND_TIME,
+          PersistentStorageKey.BATTLE_MODE_ROUND_TIME,
           JSON.stringify(initialState.battleModeRoundTime),
         ),
       ),
@@ -58,7 +58,7 @@ export const settingsSlice = createSlice({
       if (action.payload > 0) {
         state.battleModeRoundTime = action.payload;
         PersistentStorage.store(
-          AsyncStorageKeys.BATTLE_MODE_ROUND_TIME,
+          PersistentStorageKey.BATTLE_MODE_ROUND_TIME,
           JSON.stringify(state.battleModeRoundTime),
         );
       }
@@ -67,7 +67,7 @@ export const settingsSlice = createSlice({
       if (action.payload > 0) {
         state.battleModeRoundNumber = action.payload;
         PersistentStorage.store(
-          AsyncStorageKeys.BATTLE_MODE_ROUND_NUMBER,
+          PersistentStorageKey.BATTLE_MODE_ROUND_NUMBER,
           JSON.stringify(state.battleModeRoundNumber),
         );
       }

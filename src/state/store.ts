@@ -1,11 +1,13 @@
 import {configureStore} from '@reduxjs/toolkit';
 import battleMode from 'app/battleMode/state';
 import settings from 'app/settings/state';
+import onboarding from 'app/onboarding/state';
 
 const store = configureStore({
   reducer: {
     battleMode,
     settings,
+    onboarding,
   },
 });
 

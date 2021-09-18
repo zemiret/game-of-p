@@ -7,17 +7,18 @@ import {
 import Freeplay from 'app/Freeplay';
 import {
   NavigationContainer,
-  RouteProp,
   NavigationProp as BaseNavigationProp,
+  RouteProp,
 } from '@react-navigation/native';
 import Settings from 'app/settings/Settings';
-import Onboarding from 'app/Onboarding';
+import Onboarding from 'app/onboarding/Onboarding';
 import BattleModeInit from 'app/battleMode/BattleModeInit';
 import BattleModeSummary from 'app/battleMode/BattleModeSummary';
 import BattleModeWordChallenge from 'app/battleMode/BattleModeWordChallenge';
 import BattleModeFinalSummary from 'app/battleMode/BattleModeFinalSummary';
 import {fetchDefaultStoredSettings} from 'app/settings/state';
-import {useDispatch} from 'app/state/hooks';
+import {useDispatch, useSelector} from 'app/state/hooks';
+import {fetchOnboardingSeen, selectOnboardingSeen} from 'app/onboarding/state';
 
 export const navigateAction =
   (navigation: BaseNavigationProp<NavigationParams>, route: Routes) => () => {
@@ -65,43 +66,59 @@ export const NavigationStack = createNativeStackNavigator<NavigationParams>();
 const Navigation: React.FC = () => {
   const dispatch = useDispatch();
 
+  const onboardingSeen = useSelector(selectOnboardingSeen);
+
   useEffect(() => {
     dispatch(fetchDefaultStoredSettings());
+    dispatch(fetchOnboardingSeen());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <NavigationContainer>
-      <NavigationStack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-        initialRouteName={Routes.MENU}>
-        <NavigationStack.Screen name={Routes.MENU} component={Menu} />
-        <NavigationStack.Screen name={Routes.FREEPLAY} component={Freeplay} />
-        <NavigationStack.Screen name={Routes.SETTINGS} component={Settings} />
-        <NavigationStack.Screen
-          name={Routes.ONBOARDING}
-          component={Onboarding}
-        />
+      {onboardingSeen ? (
+        <NavigationStack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}
+          initialRouteName={Routes.MENU}>
+          <NavigationStack.Screen name={Routes.MENU} component={Menu} />
+          <NavigationStack.Screen name={Routes.FREEPLAY} component={Freeplay} />
+          <NavigationStack.Screen name={Routes.SETTINGS} component={Settings} />
+          <NavigationStack.Screen
+            name={Routes.ONBOARDING}
+            component={Onboarding}
+          />
 
-        <NavigationStack.Screen
-          name={Routes.BATTLE_MODE_INIT}
-          component={BattleModeInit}
-        />
-        <NavigationStack.Screen
-          name={Routes.BATTLE_MODE_SUMMARY}
-          component={BattleModeSummary}
-        />
-        <NavigationStack.Screen
-          name={Routes.BATTLE_MODE_WORD_CHALLENGE}
-          component={BattleModeWordChallenge}
-        />
-        <NavigationStack.Screen
-          name={Routes.BATTLE_MODE_FINAL_SUMMARY}
-          component={BattleModeFinalSummary}
-        />
-      </NavigationStack.Navigator>
+          <NavigationStack.Screen
+            name={Routes.BATTLE_MODE_INIT}
+            component={BattleModeInit}
+          />
+          <NavigationStack.Screen
+            name={Routes.BATTLE_MODE_SUMMARY}
+            component={BattleModeSummary}
+          />
+          <NavigationStack.Screen
+            name={Routes.BATTLE_MODE_WORD_CHALLENGE}
+            component={BattleModeWordChallenge}
+          />
+          <NavigationStack.Screen
+            name={Routes.BATTLE_MODE_FINAL_SUMMARY}
+            component={BattleModeFinalSummary}
+          />
+        </NavigationStack.Navigator>
+      ) : (
+        <NavigationStack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}
+          initialRouteName={Routes.ONBOARDING}>
+          <NavigationStack.Screen
+            name={Routes.ONBOARDING}
+            component={Onboarding}
+          />
+        </NavigationStack.Navigator>
+      )}
     </NavigationContainer>
   );
 };
