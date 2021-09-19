@@ -7,10 +7,12 @@ import {Shadow} from 'react-native-shadow-2';
 export interface RoundIconProps {
   name: string;
   size?: number;
+  sizeMultiplier?: number;
 }
 
 export const RoundIcon: React.FC<RoundIconProps> = props => {
   const size = props.size || 40;
+  const sizeMultiplier = props.sizeMultiplier || 0.6;
 
   return (
     <Shadow distance={size / 20}>
@@ -18,7 +20,7 @@ export const RoundIcon: React.FC<RoundIconProps> = props => {
         <View style={styles.iconContainer}>
           <Icon
             name={props.name}
-            size={Math.floor(size * 0.6)}
+            size={Math.floor(size * sizeMultiplier)}
             color={Colors.secondary}
           />
         </View>

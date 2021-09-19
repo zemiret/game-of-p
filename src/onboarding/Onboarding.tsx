@@ -96,12 +96,8 @@ const Onboarding: React.FC = () => {
   const _renderItem = ({item}: {item: any}) => {
     return (
       <View style={styles.container}>
-        {item.image}
-        <Spacer spacing={Spacings.md} />
-        {item.title}
-        <Spacer spacing={Spacings.md} />
-        {item.subtitle}
-        <Spacer spacing={Spacings.md} />
+        <View style={styles.sectionContainer}>{item.title}</View>
+        <View style={styles.sectionContainer}>{item.subtitle}</View>
       </View>
     );
   };
@@ -136,14 +132,16 @@ const styles = StyleSheet.create({
     ...Layouts.container,
     ...Layouts.padded(),
   },
+  sectionContainer: {
+    ...Layouts.alignCenter,
+  },
   title: {
     ...Typography.h1,
   },
   subtitle: {
     ...Typography.h4,
-    // color: Colors.secondary,
-    color: Colors.black,
     textAlign: 'center',
+    color: Colors.black,
   },
   activeDot: {
     backgroundColor: Colors.secondary,

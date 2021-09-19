@@ -18,8 +18,9 @@ because it is still dependant on the `currentTeam` state
 [x] exit links under screens
 [x] settings (dark mode?, team settings (countdown time, word amount))
 [x] battle mode styling
-[] start game with onboarding (then asyncStorage to do it only once)
+[x] start game with onboarding (then asyncStorage to do it only once)
 [x] settings saving to async storage
-[] onboarding styling and typing
-[] back button when oboarding from menu
-[] icon
+[x] onboarding styling (with some noice images) and typing
+~~[ ] back button when onboarding from menu (probably can use onboardingSeen state for that)~~
+[ ] icon
+[ ] better dictioanary? maybe? Maybe not. It's challenging as is, and that's ok

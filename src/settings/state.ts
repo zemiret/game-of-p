@@ -19,7 +19,7 @@ const enum PersistentStorageKey {
 
 const initialState: SettingsState = {
   battleModeRoundTime: 60,
-  battleModeRoundNumber: 1,
+  battleModeRoundNumber: 3,
 };
 
 export const fetchDefaultStoredSettings = createAsyncThunk(
