@@ -22,5 +22,12 @@ because it is still dependant on the `currentTeam` state
 [x] settings saving to async storage
 [x] onboarding styling (with some noice images) and typing
 ~~[ ] back button when onboarding from menu (probably can use onboardingSeen state for that)~~
-[ ] icon
-[ ] better dictioanary? maybe? Maybe not. It's challenging as is, and that's ok
+[x] icon
+~~[ ] better dictioanary? maybe? Maybe not. It's challenging as is, and that's ok~~
+
+Do poprawki:
+[ ] when you click very fast in battle mode, you can mess it up (the round number never changes)
+It probably has to do with being dependant on the transition state to fire up some actions.
+I think we need to get rid of that. Also - the flickering of color/state is anoying after all (battle mode summary)
+[ ] onboarding as seen only after going through it (otherwise you can open app, close, and never see onboarding)
+[ ] menu landscape orientation messess up onboarding button (do them absolute)
