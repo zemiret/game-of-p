@@ -19,6 +19,7 @@ import BattleModeFinalSummary from 'app/battleMode/BattleModeFinalSummary';
 import {fetchDefaultStoredSettings} from 'app/settings/state';
 import {useDispatch, useSelector} from 'app/state/hooks';
 import {fetchOnboardingSeen, selectOnboardingSeen} from 'app/onboarding/state';
+import {Team} from 'app/battleMode/state';
 
 export const navigateAction =
   (navigation: BaseNavigationProp<NavigationParams>, route: Routes) => () => {
@@ -37,6 +38,15 @@ export const enum Routes {
   BATTLE_MODE_FINAL_SUMMARY = 'BATTLE_MODE_FINAL_SUMMARY',
 }
 
+type BattleModeWordChallengeParams = {
+  team: Team;
+};
+
+type BattleModeSummaryParams = {
+  endTurnFor: Team;
+  // success: boolean;
+};
+
 export type NavigationParams = {
   [Routes.MENU]: undefined;
   [Routes.FREEPLAY]: undefined;
@@ -44,8 +54,8 @@ export type NavigationParams = {
   [Routes.ONBOARDING]: undefined;
 
   [Routes.BATTLE_MODE_INIT]: undefined;
-  [Routes.BATTLE_MODE_SUMMARY]: undefined;
-  [Routes.BATTLE_MODE_WORD_CHALLENGE]: undefined;
+  [Routes.BATTLE_MODE_SUMMARY]: BattleModeSummaryParams;
+  [Routes.BATTLE_MODE_WORD_CHALLENGE]: BattleModeWordChallengeParams;
   [Routes.BATTLE_MODE_FINAL_SUMMARY]: undefined;
 };
 

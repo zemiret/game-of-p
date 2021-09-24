@@ -1,15 +1,13 @@
 import React, {useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
 import IconButton from 'app/components/IconButton';
-import {navigateAction, Routes} from 'app/navigation';
+import {Routes} from 'app/navigation';
 import {useNavigation} from '@react-navigation/native';
 import Button from 'app/components/Button';
 import {useDispatch, useSelector} from 'app/state/hooks';
 import {
-  bumpSharedTeamState,
   init,
   selectCountdownTime,
-  selectCurrentTeam,
   selectTotalRoundNumberForDisplay,
   Team,
 } from 'app/battleMode/state';
@@ -23,7 +21,8 @@ const BattleModeInit: React.FC = () => {
   const dispatch = useDispatch();
 
   const settings = useSelector(selectSettings);
-  const currentTeam = useSelector(selectCurrentTeam);
+
+  const currentTeam = Math.random() < 0.5 ? Team.BLUE : Team.RED; // random currentTeam
   const roundTime = useSelector(selectCountdownTime);
   const roundNumber = useSelector(selectTotalRoundNumberForDisplay);
 
@@ -31,7 +30,6 @@ const BattleModeInit: React.FC = () => {
 
   useEffect(() => {
     dispatch(init(settings));
-    dispatch(bumpSharedTeamState());
   }, [dispatch, settings]);
 
   return (
@@ -57,10 +55,14 @@ const BattleModeInit: React.FC = () => {
       <View style={styles.sectionContainer}>
         <Button
           title={'Start'}
-          onPress={navigateAction(
-            navigation,
-            Routes.BATTLE_MODE_WORD_CHALLENGE,
-          )}
+          onPress={() =>
+            navigation.navigate({
+              name: Routes.BATTLE_MODE_WORD_CHALLENGE,
+              params: {
+                team: currentTeam,
+              },
+            })
+          }
         />
       </View>
     </View>

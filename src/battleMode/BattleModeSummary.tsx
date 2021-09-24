@@ -1,12 +1,17 @@
 import React, {useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
 import Text from 'app/components/Text';
-import {navigateAction, NavigationProp, Routes} from 'app/navigation';
-import {useNavigation} from '@react-navigation/native';
 import {
-  bumpSharedTeamState,
+  navigateAction,
+  NavigationProp,
+  NavigationRouteProp,
+  Routes,
+} from 'app/navigation';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import {
+  bumpTurnNumber,
+  oppositeTeam,
   selectBlueTeamDetails,
-  selectCurrentTeam,
   selectRedTeamDetails,
   selectRoundNumberForDisplay,
   selectTotalRoundNumberForDisplay,
@@ -21,32 +26,35 @@ import {teamBorder, teamColor} from 'app/battleMode/styles';
 const BattleModeSummary: React.FC = () => {
   const navigation =
     useNavigation<NavigationProp<Routes.BATTLE_MODE_SUMMARY>>();
+  const route = useRoute<NavigationRouteProp<Routes.BATTLE_MODE_SUMMARY>>();
   const dispatch = useDispatch();
 
   const roundNumber = useSelector(selectRoundNumberForDisplay);
   const totalRoundNumber = useSelector(selectTotalRoundNumberForDisplay);
-  const currentTeam = useSelector(selectCurrentTeam);
+
+  const nextTeam = oppositeTeam(route.params.endTurnFor);
+
   const redTeam = useSelector(selectRedTeamDetails);
   const blueTeam = useSelector(selectBlueTeamDetails);
 
   const nextTeamDisplayName =
-    currentTeam === Team.BLUE ? 'Niebieskich' : 'Czerwonych';
+    nextTeam === Team.BLUE ? 'Niebieskich' : 'Czerwonych';
 
   useEffect(() => {
     return navigation.addListener('transitionEnd', () => {
-      dispatch(bumpSharedTeamState());
+      dispatch(bumpTurnNumber(route.params.endTurnFor));
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigation]);
 
   return (
-    <View style={[styles.outerContainer, teamBorder(currentTeam)]}>
+    <View style={[styles.outerContainer, teamBorder(nextTeam)]}>
       <View style={styles.sectionContainer}>
         <Text style={{color: Colors.secondary}}>
           Runda: {roundNumber}/{totalRoundNumber}
         </Text>
         <Text style={styles.label}>Teraz kolej</Text>
-        <Text style={[styles.infoText, {color: teamColor(currentTeam)}]}>
+        <Text style={[styles.infoText, {color: teamColor(nextTeam)}]}>
           {nextTeamDisplayName}
         </Text>
       </View>
@@ -66,9 +74,14 @@ const BattleModeSummary: React.FC = () => {
       <View style={styles.sectionContainer}>
         <Button
           title={'Start'}
-          onPress={() => {
-            navigateAction(navigation, Routes.BATTLE_MODE_WORD_CHALLENGE)();
-          }}
+          onPress={() =>
+            navigation.navigate({
+              name: Routes.BATTLE_MODE_WORD_CHALLENGE,
+              params: {
+                team: nextTeam,
+              },
+            })
+          }
         />
         <View style={styles.spacer} />
         <Link

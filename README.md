@@ -25,9 +25,11 @@ because it is still dependant on the `currentTeam` state
 [x] icon
 ~~[ ] better dictioanary? maybe? Maybe not. It's challenging as is, and that's ok~~
 
-Do poprawki:
-[ ] when you click very fast in battle mode, you can mess it up (the round number never changes)
+To fix:
+[x] when you click very fast in battle mode, you can mess it up (the round number never changes)
 It probably has to do with being dependant on the transition state to fire up some actions.
 I think we need to get rid of that. Also - the flickering of color/state is anoying after all (battle mode summary)
+[ ] round number ending with battle mode countdown timer
+[x] you can click very quickly on the "udało się" button and you will get more than +1 score
 [ ] onboarding as seen only after going through it (otherwise you can open app, close, and never see onboarding)
 [ ] menu landscape orientation messess up onboarding button (do them absolute)

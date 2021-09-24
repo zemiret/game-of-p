@@ -16,20 +16,14 @@ export interface TeamState {
 }
 
 export interface BattleState {
-  wordChallenge: string;
-  currentTeam: Team;
   totalRoundNumber: number;
-  roundNumber: number;
   countdownTime: number;
   [Team.BLUE]: TeamState;
   [Team.RED]: TeamState;
 }
 
 const initialState: BattleState = {
-  wordChallenge: '',
-  currentTeam: Team.RED,
   totalRoundNumber: 0,
-  roundNumber: 0,
   countdownTime: 0,
   [Team.BLUE]: {
     turnNumber: 0,
@@ -43,9 +37,18 @@ const initialState: BattleState = {
   },
 };
 
+interface EndTurnPayload {
+  guessed: boolean;
+  endForTeam: Team;
+}
+
 const splitWords = (words: string[]): [string[], string[]] => {
   const halfIdx = Math.floor(words.length / 2);
   return [words.slice(0, halfIdx), words.slice(halfIdx)];
+};
+
+export const oppositeTeam = (team: Team): Team => {
+  return team === Team.RED ? Team.BLUE : Team.RED;
 };
 
 export const battleModeSlice = createSlice({
@@ -55,52 +58,41 @@ export const battleModeSlice = createSlice({
     init(state, action: PayloadAction<SettingsState>) {
       const settings = action.payload;
 
-      state.countdownTime = settings.battleModeRoundTime;
       state.totalRoundNumber = settings.battleModeRoundNumber;
+      state.countdownTime = settings.battleModeRoundTime;
 
-      state.roundNumber = 0;
-      state[Team.BLUE].score = 0;
-      state[Team.RED].score = 0;
       const [words1, words2] = splitWords(
         Words.selectBatch(action.payload.battleModeRoundNumber * 2),
       );
+
+      // state.roundNumber = 0;
+      state[Team.BLUE].score = 0;
+      state[Team.BLUE].turnNumber = 0;
       state[Team.BLUE].wordList = words1;
+
+      state[Team.RED].score = 0;
+      state[Team.RED].turnNumber = 0;
       state[Team.RED].wordList = words2;
     },
-    countdown(state) {
-      state.countdownTime--;
-    },
-    endTurn(state, action: PayloadAction<boolean>) {
-      const guessed = action.payload;
-      state[state.currentTeam].turnNumber++;
-      if (guessed) {
-        state[state.currentTeam].score++;
-      }
+    bumpScore(state, action: PayloadAction<EndTurnPayload>) {
+      const guessed = action.payload.guessed;
+      const forTeam = action.payload.endForTeam;
 
-      if (state[Team.RED].turnNumber === state[Team.BLUE].turnNumber) {
-        // end round
-        state.roundNumber++;
+      if (guessed) {
+        state[forTeam].score++;
       }
     },
-    bumpSharedTeamState(state) {
-      state.wordChallenge =
-        state[state.currentTeam].wordList[state.roundNumber];
-      state.currentTeam = state.currentTeam === Team.RED ? Team.BLUE : Team.RED;
+    bumpTurnNumber(state, action: PayloadAction<Team>) {
+      state[action.payload].turnNumber++;
     },
   },
 });
 
-export const {init, countdown, endTurn, bumpSharedTeamState} =
-  battleModeSlice.actions;
+export const {init, bumpScore, bumpTurnNumber} = battleModeSlice.actions;
 
 export default battleModeSlice.reducer;
 
 export const selectBattleMode = (state: RootState) => state.battleMode;
-
-export const selectCurrentTeam = createSelector(
-  selectBattleMode,
-  state => state.currentTeam,
-);
 
 export const selectRedTeamDetails = createSelector(
   selectBattleMode,
@@ -119,7 +111,13 @@ export const selectCountdownTime = createSelector(
 
 export const selectRoundNumberForDisplay = createSelector(
   selectBattleMode,
-  state => state.roundNumber + 1,
+  state => {
+    const roundNumber =
+      state[Team.RED].turnNumber < state[Team.BLUE].turnNumber
+        ? state[Team.RED].turnNumber
+        : state[Team.BLUE].turnNumber;
+    return roundNumber + 1;
+  },
 );
 
 export const selectTotalRoundNumberForDisplay = createSelector(
@@ -127,14 +125,13 @@ export const selectTotalRoundNumberForDisplay = createSelector(
   state => state.totalRoundNumber,
 );
 
+// Technically both need to be equal to total round number
+// But since turn will be updated after word challenge it means only one of them is enough.
 export const selectIsLastTurn = createSelector(
   selectBattleMode,
-  state => state.roundNumber === state.totalRoundNumber,
-);
-
-export const selectCurrentWord = createSelector(
-  selectBattleMode,
-  state => state.wordChallenge,
+  state =>
+    state[Team.RED].turnNumber === state.totalRoundNumber ||
+    state[Team.BLUE].turnNumber === state.totalRoundNumber,
 );
 
 export const selectWinner = createSelector(selectBattleMode, state => {
