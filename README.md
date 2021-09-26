@@ -31,5 +31,5 @@ It probably has to do with being dependant on the transition state to fire up so
 I think we need to get rid of that. Also - the flickering of color/state is anoying after all (battle mode summary)
 [x] round number ending with battle mode countdown timer
 [x] you can click very quickly on the "udało się" button and you will get more than +1 score
-[ ] onboarding as seen only after going through it (otherwise you can open app, close, and never see onboarding)
+[x] onboarding as seen only after going through it (otherwise you can open app, close, and never see onboarding)
 [x] menu landscape orientation messess up onboarding button (do them absolute)

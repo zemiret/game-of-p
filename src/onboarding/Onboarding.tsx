@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useRef} from 'react';
 import {navigateAction, Routes} from 'app/navigation';
 import {StyleSheet, View} from 'react-native';
 import Text from 'app/components/Text';
@@ -13,10 +13,6 @@ import {setOnboardingSeen} from 'app/onboarding/state';
 const Onboarding: React.FC = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(setOnboardingSeen());
-  }, [dispatch]);
 
   const slides = [
     {
@@ -115,6 +111,7 @@ const Onboarding: React.FC = () => {
       renderItem={_renderItem}
       data={slides}
       onDone={() => {
+        dispatch(setOnboardingSeen());
         ref.current?.goToSlide(0);
         navigateAction(navigation, Routes.MENU)();
       }}
