@@ -64,18 +64,6 @@ const BattleModeWordChallenge: React.FC = () => {
     });
   }, [navigation, totalCountdownTime, countdownInterval]);
 
-  // scren exit
-  useEffect(() => {
-    return navigation.addListener('transitionStart', e => {
-      if (e.data.closing) {
-        if (countdownInterval != null) {
-          clearInterval(countdownInterval);
-          setCountdownInterval(undefined);
-        }
-      }
-    });
-  }, [navigation, countdownInterval]);
-
   const handleEndTurn = (success: boolean) => {
     dispatch(
       bumpScore({
@@ -85,6 +73,12 @@ const BattleModeWordChallenge: React.FC = () => {
     );
 
     setEndTurnHandled(true);
+
+    if (countdownInterval != null) {
+      clearInterval(countdownInterval);
+      setCountdownInterval(undefined);
+      setCountdownTime(totalCountdownTime);
+    }
 
     if (isLastTurn) {
       navigateAction(navigation, Routes.BATTLE_MODE_FINAL_SUMMARY)();
@@ -100,11 +94,9 @@ const BattleModeWordChallenge: React.FC = () => {
 
   useEffect(() => {
     if (countdownTime <= 0) {
-      // TODO: REVISE END TURN - there is a problem like this (when you get back it instantly finishes turn)
-      // dispatch(endTurn(false));
-      // setTurnEndSwitch(s => !s);
-      // handleEndTurn(false);
+      handleEndTurn(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [countdownTime]);
 
   const quitToMenu = () => {

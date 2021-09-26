@@ -18,8 +18,7 @@ const enum PersistentStorageKey {
 }
 
 const initialState: SettingsState = {
-  // TODO: BRING BACK TO 60! JUST TESTING ROUND ENDING
-  battleModeRoundTime: 3,
+  battleModeRoundTime: 60,
   battleModeRoundNumber: 3,
 };
 
@@ -35,17 +34,14 @@ export const fetchDefaultStoredSettings = createAsyncThunk(
       ),
     );
 
-    // TODO: BRING BACK! JUST TESTING ROUND ENDING
-    // const battleModeRoundTime = Number(
-    //   JSON.parse(
-    //     await PersistentStorage.getOrDefault(
-    //       PersistentStorageKey.BATTLE_MODE_ROUND_TIME,
-    //       JSON.stringify(initialState.battleModeRoundTime),
-    //     ),
-    //   ),
-    // );
-
-    const battleModeRoundTime = 3;
+    const battleModeRoundTime = Number(
+      JSON.parse(
+        await PersistentStorage.getOrDefault(
+          PersistentStorageKey.BATTLE_MODE_ROUND_TIME,
+          JSON.stringify(initialState.battleModeRoundTime),
+        ),
+      ),
+    );
 
     return {
       battleModeRoundNumber,
