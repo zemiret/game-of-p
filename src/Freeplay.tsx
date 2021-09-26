@@ -1,6 +1,6 @@
 import React, {useCallback, useState} from 'react';
 import {Linking, StyleSheet, View} from 'react-native';
-import {Layouts, Typography} from 'app/styles';
+import {Icons, Layouts, Typography} from 'app/styles';
 import Text from 'app/components/Text';
 import Button from 'app/components/Button';
 import Link from 'app/components/Link';
@@ -19,7 +19,12 @@ const Freeplay: React.FC = () => {
 
   return (
     <View style={styles.outerContainer}>
-      <IconButton onPress={navigation.goBack} name={'arrowleft'} size={70} />
+      <View style={styles.backIconContainer}>
+        <IconButton onPress={navigation.goBack} name={'arrowleft'} size={70} />
+      </View>
+
+      {/* Empty view to keep main text correctly "centered" vertically*/}
+      <View />
 
       <View style={styles.sectionContainer}>
         <Text style={styles.mainText}>{word}</Text>
@@ -44,10 +49,14 @@ const styles = StyleSheet.create({
   },
   sectionContainer: {
     ...Layouts.alignCenter,
+    ...Layouts.centered,
   },
   mainText: {
     ...Typography.h1,
     ...Typography.bold,
+  },
+  backIconContainer: {
+    ...Icons.topLeftIconContainer,
   },
 });
 

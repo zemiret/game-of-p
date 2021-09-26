@@ -3,7 +3,7 @@ import {navigateAction, Routes} from 'app/navigation';
 import {StyleSheet, View} from 'react-native';
 import Button from 'app/components/Button';
 import IconButton from 'app/components/IconButton';
-import {Layouts, Spacings, Typography} from 'app/styles';
+import {Icons, Layouts, Spacings, Typography} from 'app/styles';
 import Text from 'app/components/Text';
 import {useNavigation} from '@react-navigation/native';
 
@@ -12,14 +12,15 @@ const Menu: React.FC = () => {
 
   return (
     <View style={styles.outerContainer}>
-      <View style={styles.topSectionContainer}>
-        <View style={styles.menuItemSpacedMd}>
-          <IconButton
-            onPress={navigateAction(navigation, Routes.SETTINGS)}
-            name={'setting'}
-            size={70}
-          />
-        </View>
+      <View style={styles.settingsIconsContainer}>
+        <IconButton
+          onPress={navigateAction(navigation, Routes.SETTINGS)}
+          name={'setting'}
+          size={70}
+        />
+      </View>
+
+      <View style={styles.onboardingIconContainer}>
         <IconButton
           onPress={navigateAction(navigation, Routes.ONBOARDING)}
           name={'question'}
@@ -69,6 +70,13 @@ const styles = StyleSheet.create({
   gameTypeHeader: {
     ...Typography.h2,
     ...Typography.bold,
+  },
+  settingsIconsContainer: {
+    ...Icons.topRightIconContainer,
+  },
+  onboardingIconContainer: {
+    ...Icons.topRightIconContainer,
+    ...Icons.topSpacing(70 + Spacings.bg + Spacings.md),
   },
 });
 

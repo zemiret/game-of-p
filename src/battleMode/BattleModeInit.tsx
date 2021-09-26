@@ -13,7 +13,7 @@ import {
 } from 'app/battleMode/state';
 import {selectSettings} from 'app/settings/state';
 import Text from 'app/components/Text';
-import {Layouts, Typography} from 'app/styles';
+import {Icons, Layouts, Typography} from 'app/styles';
 import {teamBorder, teamColor} from 'app/battleMode/styles';
 
 const BattleModeInit: React.FC = () => {
@@ -34,7 +34,13 @@ const BattleModeInit: React.FC = () => {
 
   return (
     <View style={[styles.outerContainer, teamBorder(currentTeam)]}>
-      <IconButton onPress={navigation.goBack} name={'arrowleft'} size={70} />
+      <View style={styles.backIconContainer}>
+        <IconButton onPress={navigation.goBack} name={'arrowleft'} size={70} />
+      </View>
+
+      {/* Empty view to keep main text correctly "centered" vertically*/}
+      <View />
+
       <View style={styles.sectionContainer}>
         <Text style={styles.label}>Rozpoczynają</Text>
         <Text style={[styles.infoText, {color: teamColor(currentTeam)}]}>
@@ -88,6 +94,9 @@ const styles = StyleSheet.create({
   infoText: {
     ...Typography.h2,
     ...Typography.bold,
+  },
+  backIconContainer: {
+    ...Icons.topLeftIconContainer,
   },
 });
 

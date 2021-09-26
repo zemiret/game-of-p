@@ -65,14 +65,24 @@ const BattleModeWordChallenge: React.FC = () => {
   }, [navigation, totalCountdownTime, countdownInterval]);
 
   const handleEndTurn = (success: boolean) => {
+    // TODO: There is a race condition here!
+    // 1. user clicks button, handleEndTurn is called. It checks if (endTurnHandled) - false
+    // 2. user quickly clicks button again. Check is still false
+    // 3. 1st call executes
+    // 4. 2nd call executes
+    // 5. score is bumped twice
+    // I don't know how to solve it other than using some mutex to guard (at least) setting endTurnHandled.
+    if (endTurnHandled) {
+      return;
+    }
+    setEndTurnHandled(true);
+
     dispatch(
       bumpScore({
         endForTeam: currentTeam,
         guessed: success,
       }),
     );
-
-    setEndTurnHandled(true);
 
     if (countdownInterval != null) {
       clearInterval(countdownInterval);
