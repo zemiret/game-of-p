@@ -13,6 +13,11 @@ import {useDispatch, useSelector} from 'app/state/hooks';
 import {Layouts, Spacings, Typography} from 'app/styles';
 import IconButton from 'app/components/IconButton';
 
+const battleModeRoundNumberMin = 1;
+const battleModeRoundNumberMax = 10;
+const battleModeRoundTimeMin = 30;
+const battleModeRoundTimeMax = 600;
+
 const Settings: React.FC = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -21,11 +26,18 @@ const Settings: React.FC = () => {
   const battleModeRoundNumber = useSelector(selectBattleModeRoundNumber);
 
   const onRoundTimeChange = (value: number) => {
-    dispatch(setBattleModeRoundTime(value));
+    if (value >= battleModeRoundTimeMin && value <= battleModeRoundTimeMax) {
+      dispatch(setBattleModeRoundTime(value));
+    }
   };
 
   const onRoundNumberChange = (value: number) => {
-    dispatch(setBattleModeRoundNumber(value));
+    if (
+      value >= battleModeRoundNumberMin &&
+      value <= battleModeRoundNumberMax
+    ) {
+      dispatch(setBattleModeRoundNumber(value));
+    }
   };
 
   return (
@@ -38,8 +50,8 @@ const Settings: React.FC = () => {
           text={'Ilość rund'}
           value={battleModeRoundNumber}
           onChange={onRoundNumberChange}
-          minValue={1}
-          maxValue={10}
+          minValue={battleModeRoundNumberMin}
+          maxValue={battleModeRoundNumberMax}
           valueType={'integer'}
         />
         <View style={styles.spacer} />
@@ -47,9 +59,9 @@ const Settings: React.FC = () => {
           text={'Czas rundy (s)'}
           value={battleModeRoundTime}
           onChange={onRoundTimeChange}
-          minValue={30}
+          minValue={battleModeRoundTimeMin}
+          maxValue={battleModeRoundTimeMax}
           step={10}
-          maxValue={600}
           valueType={'integer'}
         />
       </View>

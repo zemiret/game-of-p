@@ -47,6 +47,11 @@ const Onboarding: React.FC = () => {
           </Text>
           <Text style={styles.subtitle}>- Rakieta?</Text>
           <Text style={styles.subtitle}>- Prawda</Text>
+          <Spacer spacing={Spacings.sm} />
+          <Text style={styles.subtitle}>
+            Tłumaczący może używać jedynie słów na literę P. Słowa typu "tak",
+            "nie" są zakazane.
+          </Text>
         </View>
       ),
     },
