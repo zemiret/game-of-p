@@ -39,4 +39,6 @@ I think we need to get rid of that. Also - the flickering of color/state is anoy
 [ ] Consider adding some logo to menu - but it'd need to have dynamic size to handle landscape well.
 [ ] Publish :)
 
+[ ] IF YOU EVER COME BACK TO HERE - set up pipeline to generate .aab automatically
+
 [ ] There is "a list of sjp words for games .zip" - we can use that if something is wrong with the current words
