@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
   bottomSectionContainer: {
     ...Layouts.container,
     ...Layouts.pullDownCenter,
+    ...Layouts.padded(Spacings.md),
   },
   menuItemSpacedBg: {
     ...Layouts.marginBottom(Spacings.bg),
@@ -76,7 +77,7 @@ const styles = StyleSheet.create({
   },
   onboardingIconContainer: {
     ...Icons.topRightIconContainer,
-    ...Icons.topSpacing(70 + Spacings.bg + Spacings.md),
+    ...Icons.topSpacing(70 + Spacings.md + Spacings.md),
   },
 });
 

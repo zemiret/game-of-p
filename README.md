@@ -35,9 +35,8 @@ I think we need to get rid of that. Also - the flickering of color/state is anoy
 [x] menu landscape orientation messess up onboarding button (do them absolute)
 [x] better onboarding - need to emphasize that you cannot use words like "NIE", "TAK"
 [x] fix settings - you can set set input to some really high number, click "BACK", and then battle mode is messed up. BETTER VALIDATION OF INPUTS
-[ ] In MENU, help button is overlapping with game mode button
-[ ] Change "Ustawka" name to something more friendly?
+[x] In MENU, help button is overlapping with game mode button
 [ ] Consider adding some logo to menu - but it'd need to have dynamic size to handle landscape well.
-[ ] Publish :) [set up donate button, because why not :) - either ingame or in the playstore description (can I do that in description?)]
+[ ] Publish :)
 
 [ ] There is "a list of sjp words for games .zip" - we can use that if something is wrong with the current words

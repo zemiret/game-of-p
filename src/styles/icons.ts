@@ -10,14 +10,14 @@ interface IconsTypes {
 export const Icons: IconsTypes = {
   topLeftIconContainer: {
     position: 'absolute',
-    top: Spacings.bg,
-    left: Spacings.bg,
+    top: Spacings.md,
+    left: Spacings.md,
     zIndex: 1000,
   },
   topRightIconContainer: {
     position: 'absolute',
-    top: Spacings.bg,
-    right: Spacings.bg,
+    top: Spacings.md,
+    right: Spacings.md,
     zIndex: 1000,
   },
   topSpacing: (space: number) => ({
