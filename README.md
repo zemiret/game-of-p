@@ -23,7 +23,7 @@ because it is still dependant on the `currentTeam` state
 [x] onboarding styling (with some noice images) and typing
 ~~[ ] back button when onboarding from menu (probably can use onboardingSeen state for that)~~
 [x] icon
-~~[ ] better dictioanary? maybe? Maybe not. It's challenging as is, and that's ok~~
+~~[ ] better dictioanary? maybe? Maybe not. It's challenging as is, and that's ok ~~
 
 To fix:
 [x] when you click very fast in battle mode, you can mess it up (the round number never changes)
@@ -36,9 +36,10 @@ I think we need to get rid of that. Also - the flickering of color/state is anoy
 [x] better onboarding - need to emphasize that you cannot use words like "NIE", "TAK"
 [x] fix settings - you can set set input to some really high number, click "BACK", and then battle mode is messed up. BETTER VALIDATION OF INPUTS
 [x] In MENU, help button is overlapping with game mode button
-[ ] Consider adding some logo to menu - but it'd need to have dynamic size to handle landscape well.
+~~ [ ] Consider adding some logo to menu - but it'd need to have dynamic size to handle landscape well. ~~
+[x] ONBOARDING first time problem (separate navigators) - 1st time navigate to menu doesn't work
 [ ] Publish :)
 
 [ ] IF YOU EVER COME BACK TO HERE - set up pipeline to generate .aab automatically
 
-[ ] There is "a list of sjp words for games .zip" - we can use that if something is wrong with the current words
+There is "a list of sjp words for games .zip" - we can use that if something is wrong with the current words

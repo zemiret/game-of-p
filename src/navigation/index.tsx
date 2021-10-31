@@ -17,8 +17,8 @@ import BattleModeSummary from 'app/battleMode/BattleModeSummary';
 import BattleModeWordChallenge from 'app/battleMode/BattleModeWordChallenge';
 import BattleModeFinalSummary from 'app/battleMode/BattleModeFinalSummary';
 import {fetchDefaultStoredSettings} from 'app/settings/state';
-import {useDispatch, useSelector} from 'app/state/hooks';
-import {fetchOnboardingSeen, selectOnboardingSeen} from 'app/onboarding/state';
+import {useDispatch} from 'app/state/hooks';
+import {fetchOnboardingSeen} from 'app/onboarding/state';
 import {Team} from 'app/battleMode/state';
 
 export const navigateAction =
@@ -76,8 +76,6 @@ export const NavigationStack = createNativeStackNavigator<NavigationParams>();
 const Navigation: React.FC = () => {
   const dispatch = useDispatch();
 
-  const onboardingSeen = useSelector(selectOnboardingSeen);
-
   useEffect(() => {
     dispatch(fetchDefaultStoredSettings());
     dispatch(fetchOnboardingSeen());
@@ -86,49 +84,36 @@ const Navigation: React.FC = () => {
 
   return (
     <NavigationContainer>
-      {onboardingSeen ? (
-        <NavigationStack.Navigator
-          screenOptions={{
-            headerShown: false,
-          }}
-          initialRouteName={Routes.MENU}>
-          <NavigationStack.Screen name={Routes.MENU} component={Menu} />
-          <NavigationStack.Screen name={Routes.FREEPLAY} component={Freeplay} />
-          <NavigationStack.Screen name={Routes.SETTINGS} component={Settings} />
-          <NavigationStack.Screen
-            name={Routes.ONBOARDING}
-            component={Onboarding}
-          />
+      <NavigationStack.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+        initialRouteName={Routes.MENU}>
+        <NavigationStack.Screen name={Routes.MENU} component={Menu} />
+        <NavigationStack.Screen name={Routes.FREEPLAY} component={Freeplay} />
+        <NavigationStack.Screen name={Routes.SETTINGS} component={Settings} />
+        <NavigationStack.Screen
+          name={Routes.ONBOARDING}
+          component={Onboarding}
+        />
 
-          <NavigationStack.Screen
-            name={Routes.BATTLE_MODE_INIT}
-            component={BattleModeInit}
-          />
-          <NavigationStack.Screen
-            name={Routes.BATTLE_MODE_SUMMARY}
-            component={BattleModeSummary}
-          />
-          <NavigationStack.Screen
-            name={Routes.BATTLE_MODE_WORD_CHALLENGE}
-            component={BattleModeWordChallenge}
-          />
-          <NavigationStack.Screen
-            name={Routes.BATTLE_MODE_FINAL_SUMMARY}
-            component={BattleModeFinalSummary}
-          />
-        </NavigationStack.Navigator>
-      ) : (
-        <NavigationStack.Navigator
-          screenOptions={{
-            headerShown: false,
-          }}
-          initialRouteName={Routes.ONBOARDING}>
-          <NavigationStack.Screen
-            name={Routes.ONBOARDING}
-            component={Onboarding}
-          />
-        </NavigationStack.Navigator>
-      )}
+        <NavigationStack.Screen
+          name={Routes.BATTLE_MODE_INIT}
+          component={BattleModeInit}
+        />
+        <NavigationStack.Screen
+          name={Routes.BATTLE_MODE_SUMMARY}
+          component={BattleModeSummary}
+        />
+        <NavigationStack.Screen
+          name={Routes.BATTLE_MODE_WORD_CHALLENGE}
+          component={BattleModeWordChallenge}
+        />
+        <NavigationStack.Screen
+          name={Routes.BATTLE_MODE_FINAL_SUMMARY}
+          component={BattleModeFinalSummary}
+        />
+      </NavigationStack.Navigator>
     </NavigationContainer>
   );
 };

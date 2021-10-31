@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {navigateAction, Routes} from 'app/navigation';
 import {StyleSheet, View} from 'react-native';
 import Button from 'app/components/Button';
@@ -6,9 +6,19 @@ import IconButton from 'app/components/IconButton';
 import {Icons, Layouts, Spacings, Typography} from 'app/styles';
 import Text from 'app/components/Text';
 import {useNavigation} from '@react-navigation/native';
+import {useSelector} from 'app/state/hooks';
+import {selectOnboardingSeen} from 'app/onboarding/state';
 
 const Menu: React.FC = () => {
   const navigation = useNavigation();
+
+  const onboardingSeen = useSelector(selectOnboardingSeen);
+
+  useEffect(() => {
+    if (!onboardingSeen) {
+      navigateAction(navigation, Routes.ONBOARDING)();
+    }
+  }, [navigation, onboardingSeen]);
 
   return (
     <View style={styles.outerContainer}>
