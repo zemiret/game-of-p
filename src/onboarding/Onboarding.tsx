@@ -23,8 +23,8 @@ const Onboarding: React.FC = () => {
         <View>
           <Spacer spacing={Spacings.md} />
           <Text style={styles.subtitle}>
-            W P twoim zadaniem jest tłumaczenie wyrazów innym ludziom jedynie za
-            pomocą słów rozpoczynających się na literę "p".
+            W grze twoim zadaniem jest tłumaczenie wyświetlanych wyrazów innym
+            ludziom jedynie za pomocą słów rozpoczynających się od litery "p".
           </Text>
           <Spacer spacing={Spacings.sm} />
           <Text style={styles.subtitle}>Pamiętaj, tylko P!</Text>
@@ -49,8 +49,8 @@ const Onboarding: React.FC = () => {
           <Text style={styles.subtitle}>- Prawda</Text>
           <Spacer spacing={Spacings.sm} />
           <Text style={styles.subtitle}>
-            Tłumaczący może używać jedynie słów na literę P. Słowa typu "tak",
-            "nie" są zakazane.
+            Tłumaczący może używać jedynie słów rozpoczynających się od litery
+            "p". Słowa typu "tak", "nie" są zakazane.
           </Text>
         </View>
       ),
@@ -63,8 +63,9 @@ const Onboarding: React.FC = () => {
         <View>
           <Spacer spacing={Spacings.md} />
           <Text style={styles.subtitle}>
-            W trybie klasycznym jedna osoba tłumaczy wyraz, a reszta zgaduje.
-            Gdy uda się zgadnąć wyraz, przekaż telefon następnej osobie.
+            W trybie klasycznym jedna osoba tłumaczy wyraz, a reszta graczy
+            zgaduje. Gdy uda się odgadnąć wyraz, przekaż telefon następnej
+            osobie.
           </Text>
           <Text style={styles.subtitle}>Teraz jej kolej!</Text>
         </View>
